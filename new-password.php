@@ -30,14 +30,17 @@
                 <div>
                     <label for="temp">Temporary Password:</label>
                     <br>
-                    <input type="password" id="temp" name="temp" placeholder="Enter your Temporary Password">
+                    <div class="password-container">
+                        <input type="password" id="temp" name="temp" placeholder="Enter your Temporary Password">
+                        <span class="toggle-password" onclick="togglePasswordVisibility('temp')">👁️</span>
+                    </div>
                 </div>
                 <br>
                 <div>
                     <label for="new-password">New Password:</label>
                     <br>
                     <div class="password-container">
-                        <input type="password" id="new-password" name="new-password" placeholder="Enter your Password" required>
+                        <input type="password" id="new-password" name="new-password" placeholder="Enter your Password">
                         <span class="toggle-password" onclick="togglePasswordVisibility('new-password')">👁️</span>
                     </div>
                     <div>
@@ -67,7 +70,7 @@
                     <label for="con-new-password">Confirm New Password:</label>
                     <br>
                     <div class="password-container">
-                        <input type="password" id="con-new-password" name="con-new-password" placeholder="Confirm your Password" required>
+                        <input type="password" id="con-new-password" name="con-new-password" placeholder="Confirm your Password">
                         <span class="toggle-password" onclick="togglePasswordVisibility('con-new-password')">👁️</span>
                     </div>
                     <br>
@@ -87,7 +90,7 @@
             <div id="errorModal" class="modal">
                 <div class="modal-content">
                     <span class="close-button" id="closeErrorModal">&times;</span>
-                    <h2>Error!</ h2>
+                    <h2>Error!</h2>
                     <p id="errorMessage"></p>
                 </div>
             </div>
