@@ -1,28 +1,54 @@
 function toggleIPOptions() {
     const ipYes = document.getElementById('ip-yes').checked; 
     const ipOptionsDiv = document.getElementById('ip-options');
-    ipOptionsDiv.classList.toggle('hidden', !ipYes);
-    toggleIOtherTextInput(); // Call to check if the text input should be shown
+
+    // Show or hide the ipOptionsDiv based on the checked state of ipYes
+    if (ipYes) {
+        ipOptionsDiv.classList.remove('hidden');
+        toggleIOtherTextInput(); // Call to check if the text input should be shown
+    } else {
+        ipOptionsDiv.classList.add('hidden');
+        document.getElementById('ip-other-options').classList.add('hidden'); // Ensure other options are hidden
+    }
 }
 
 function toggleIOtherTextInput() {
     const selectedValue = document.getElementById('ip-specify').value;
     const ipOtherOptionsDiv = document.getElementById('ip-other-options');
-    ipOtherOptionsDiv .classList.toggle('hidden', selectedValue !== 'Others');
+
+    // Show "ip-other-options" only if "Others" is selected
+    if (selectedValue === 'Others') {
+        ipOtherOptionsDiv.classList.remove('hidden');
+    } else {
+        ipOtherOptionsDiv.classList.add('hidden');
+    }
 }
 
-        function toggleDisabilityOptions() {
-            const disabilityYes = document.getElementById('disability-yes').checked; // Ensure the ID is correct
-            const disabilityOptionsDiv = document.getElementById('disability-options');
-            disabilityOptionsDiv.classList.toggle('hidden', !disabilityYes);
-            toggleDisabilityTextInput(); // Call to check if the text input should be shown
-        }
+function toggleDisabilityOptions() {
+    const disabilityYes = document.getElementById('disability-yes').checked;
+    const options = document.getElementById('disability-options');
+    const otherOptions = document.getElementById('disability-other-options');
 
-        function toggleDisabilityTextInput() {
-            const selectedValue = document.getElementById('disability-specify').value;
-            const disabilityOtherOptionsDiv = document.getElementById('disability-other-options');
-            disabilityOtherOptionsDiv.classList.toggle('hidden', selectedValue !== 'Others');
-        }
+    if (disabilityYes) {
+        options.classList.remove('hidden');
+        toggleDisabilityTextInput(); // Evaluate dropdown's current state
+    } else {
+        options.classList.add('hidden');
+        otherOptions.classList.add('hidden'); // Ensure other options are hidden
+    }
+}
+
+function toggleDisabilityTextInput() {
+    const specify = document.getElementById('disability-specify');
+    const otherOptions = document.getElementById('disability-other-options');
+
+    // Show "disability-other-options" only if "Others" is selected
+    if (specify.value === 'Others') {
+        otherOptions.classList.remove('hidden');
+    } else {
+        otherOptions.classList.add('hidden');
+    }
+}
 
         function toggleBeneficiaryOptions() {
             var yesRadio = document.getElementById('beneficiary-yes');

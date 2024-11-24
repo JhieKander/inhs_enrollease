@@ -29,6 +29,42 @@
             $studentEmail = $row['Student_Email'];
             $studentBirthdate = $row['Student_Birthdate'] ?? ''; // Ensure this column exists in the database
             $studentGender = $row['Student_Gender'];
+            $studentMotherTongue = $row['Student_MotherTongue'];
+            $studentBirthPlace = $row['Student_BirthPlace'];
+            $studentPSABCNo = $row['Student_PSABCNo'];
+            $studentIPCommunity = $row['Student_IPCommunity'];
+            $studentWithDisability = $row['Student_WithDisability'];
+            $student4PsBeneficiary = $row['Student_4PsBeneficiary'];
+            $currentCountry = $row['Current_Country'];
+            $currentProvince = $row['Current_Province'];
+            $currentCity = $row['Current_City'];
+            $currentBarangay = $row['Current_Barangay'];
+            $currentStreetName = $row['Current_StreetName'];
+            $currentHouseNumber = $row['Current_HouseNumber'];
+            $currentZipCode = $row['Current_ZipCode'];
+            $permanentCountry = $row['Permanent_Country'];
+            $permanentProvince = $row['Permanent_Province'];
+            $permanentCity = $row['Permanent_City'];
+            $permanentBarangay = $row['Permanent_Barangay'];
+            $permanentStreetName = $row['Permanent_StreetName'];
+            $permanentHouseNo = $row['Permanent_HouseNo'];
+            $permanentZipCode = $row['Permanent_ZipCode'];
+            $fatherFirstName = $row['Father_FirstName'];
+            $fatherMiddleName = $row['Father_MiddleName'];
+            $fatherLastName = $row['Father_LastName'];
+            $fatherContactNumber = $row['Father_ContactNumber'];
+            $motherFirstName = $row['Mother_FirstName'];
+            $motherMiddleName = $row['Mother_MiddleName'];
+            $motherLastName = $row['Mother_LastName'];
+            $motherContactNumber = $row['Mother_ContactNumber'];
+            $guardianFirstName = $row['Guardian_FirstName'];
+            $guardianMiddleName = $row['Guardian_MiddleName'];
+            $guardianLastName = $row['Guardian_LastName'];
+            $guardianContactNumber = $row['Guardian_ContactNumber'];
+            $lastGradeLevel = $row['Last_GradeLevel'];
+            $lastSchoolYear = $row['Last_SchoolYear'];
+            $lastSchoolName = $row['Last_SchoolName'];
+            $lastSchoolID = $row['Last_SchoolID'];
         }
     }
 
@@ -126,26 +162,26 @@
                                 <h1>Personal Information</h1>
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <label for="learner-reference-number">Learner Reference Number</label>
+                                        <label for="learner-reference-number">Learner Reference Number <span class="opt">(optional)</span></label>
                                         <input type="text" id="learner-reference-number" maxlength="12" name="learner-reference-number" class="long-input" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo getSessionData('learner-reference-number'); ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="last-name">Last Name<span style="color: red;">*</span></label>
-                                        <input type="text" id="last-name" name="last-name" class="long-input" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo htmlspecialchars($studentLastName); ?>">
+                                        <input type="text" id="last-name" name="last-name" class="long-input" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($studentLastName); ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="first-name">First Name<span style="color: red;">*</span></label>
-                                        <input type="text" id="first-name" name="first-name" class="long-input" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo htmlspecialchars($studentFirstName); ?>">
+                                        <input type="text" id="first-name" name="first-name" class="long-input" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($studentFirstName); ?>">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="middle-name">Middle Name <span class="opt">(optional)</span></label>
-                                        <input type="text" id="middle-name" name="middle-name" class="long-input" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo htmlspecialchars($studentMiddleName); ?>">
+                                        <input type="text" id="middle-name" name="middle-name" class="long-input" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($studentMiddleName); ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="extension-name">Extension Name <span class="opt">(optional)</span></label>
-                                        <input type="text" id="extension-name" name="extension-name" class="long-input" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo htmlspecialchars($studentExtName); ?>">
+                                        <input type="text" id="extension-name" name="extension-name" class="long-input" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($studentExtName); ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="birthdate">Birthdate <span class="opt">(dd/mm/yyyy)</span><span style="color: red;">*</span></label>
@@ -162,7 +198,7 @@
                                     <div class="form-group">
                                         <label for="mother-tongue">Mother Tongue<span style="color: red;">*</span></label>
                                         <select id="mother-tongue" name="mother-tongue" class="long-input">
-                                            <option value="">Select Mother Tongue</option>
+                                            <option value="<?php echo htmlspecialchars($studentMotherTongue); ?>"><?php echo htmlspecialchars($studentMotherTongue); ?></option>
                                             <option value="Aklanon" <?php echo (getSessionData('mother-tongue') == 'Aklanon') ? 'selected' : ''; ?>>Aklanon</option>
                                             <option value="Bikol" <?php echo (getSessionData('mother-tongue') == 'Bikol') ? 'selected' : ''; ?>>Bikol</option>
                                             <option value="Cebuano" <?php echo (getSessionData('mother-tongue') == 'Cebuano') ? 'selected' : ''; ?>>Cebuano</option>
@@ -189,44 +225,50 @@
                                     <div class="form-group">
                                         <label for="place-of-birth">Place of Birth <span class="opt">(Municipality/City)</span><span style="color: red;">*</span></label>
                                         <select id="place-of-birth" name="place-of-birth" class="long-input">
-                                            <option value="">Select Place of Birth</option>
+                                            <option value=""></option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="psa-birth-certificate">PSA Birth Certificate No. (BReN) <span class="opt">(optional)</span></label>
-                                        <input type="text" id="psa-birth-certificate" name="psa-birth-certificate" class="long-input" maxlength="13" value="<?php echo getSessionData('psa-birth-certificate'); ?>">
+                                        <input type="text" id="psa-birth-certificate" name="psa-birth-certificate" class="long-input" maxlength="13" value="<?php echo htmlspecialchars($studentPSABCNo); ?>">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label>Belonging to any Indigenous People (IP) Community Indigenous Cultural Community<span style="color: red;">*</span></label>
                                         <div class="radio-group">
-                                            <input type="radio" id="ip-yes" name="ip" value="Yes" <?php echo (getSessionData('ip') == 'Yes') ? 'checked' : ''; ?> onclick="toggleIPOptions()">
+                                            <input type="radio" id="ip-yes" name="ip" value="Yes" 
+                                                <?php echo (htmlspecialchars($studentIPCommunity) !== 'No') ? 'checked' : ''; ?> 
+                                                onclick="toggleIPOptions()">
                                             <label for="ip-yes">Yes</label>
-                                            <input type="radio" id="ip-no" name="ip" value="No" <?php echo (getSessionData('ip') == 'No') ? 'checked' : ''; ?> onclick="toggleIPOptions()">
+                                            <input type="radio" id="ip-no" name="ip" value="No" 
+                                                <?php echo (htmlspecialchars($studentIPCommunity) == 'No') ? 'checked' : ''; ?> 
+                                                onclick="toggleIPOptions()">
                                             <label for="ip-no">No</label>
                                         </div>
                                         
-                                        <div id="ip-options" class="<?php echo (getSessionData('ip') == 'Yes') ? '' : 'hidden'; ?>">
+                                        <div id="ip-options" class="<?php echo (htmlspecialchars($studentIPCommunity) !== 'No') ? '' : 'hidden'; ?>">
                                             <label for="ip-specify">If yes, please specify:<span style="color: red;">*</span></label>
                                             <select id="ip-specify" name="ip-specify" class="long-input" onchange="toggleIOtherTextInput()">
-                                                <option value="">Select IP Specify</option>
-                                                <option value="Aeta" <?php echo (getSessionData('ip-specify') == 'Aeta') ? 'selected' : ''; ?>>Aeta</option>
-                                                <option value="Badjao" <?php echo (getSessionData('ip-specify') == 'Badjao') ? 'selected' : ''; ?>>Badjao</option>
-                                                <option value="Igorot" <?php echo (getSessionData('ip-specify') == 'Igorot') ? 'selected' : ''; ?>>Igorot</option>
-                                                <option value="Ilongot" <?php echo (getSessionData('ip-specify') == 'Ilongot') ? 'selected' : ''; ?>>Ilongot</option>
-                                                <option value="Lumad" <?php echo (getSessionData('ip-specify') == 'Lumad') ? 'selected' : ''; ?>>Lumad</option>
-                                                <option value="Mangyan" <?php echo (getSessionData('ip-specify') == 'Mangyan') ? 'selected' : ''; ?>>Mangyan</option>
-                                                <option value="Negrito" <?php echo (getSessionData('ip-specify') == 'Negrito') ? 'selected' : ''; ?>>Negrito</option>
-                                                <option value="Palawan Tribe" <?php echo (getSessionData('ip-specify') == 'Palawan Tribe') ? 'selected' : ''; ?>>Palawan Tribe</option>
-                                                <option value="Tumandok" <?php echo (getSessionData('ip-specify') == 'Tumandok') ? 'selected' : ''; ?>>Tumandok</option>
-                                                <option value="Others" <?php echo (getSessionData('ip-specify') == 'Others') ? 'selected' : ''; ?>>Others</option>
+                                                <option value="" <?php echo (htmlspecialchars($studentIPCommunity) === '') ? 'selected' : ''; ?>>Select IP Specify</option>
+                                                <option value="Aeta" <?php echo (htmlspecialchars($studentIPCommunity) == 'Aeta') ? 'selected' : ''; ?>>Aeta</option>
+                                                <option value="Badjao" <?php echo (htmlspecialchars($studentIPCommunity) == 'Badjao') ? 'selected' : ''; ?>>Badjao</option>
+                                                <option value="Igorot" <?php echo (htmlspecialchars($studentIPCommunity) == 'Igorot') ? 'selected' : ''; ?>>Igorot</option>
+                                                <option value="Ilongot" <?php echo (htmlspecialchars($studentIPCommunity) == 'Ilongot') ? 'selected' : ''; ?>>Ilongot</option>
+                                                <option value="Lumad" <?php echo (htmlspecialchars($studentIPCommunity) == 'Lumad') ? 'selected' : ''; ?>>Lumad</option>
+                                                <option value="Mangyan" <?php echo (htmlspecialchars($studentIPCommunity) == 'Mangyan') ? 'selected' : ''; ?>>Mangyan</option>
+                                                <option value="Negrito" <?php echo (htmlspecialchars($studentIPCommunity) == 'Negrito') ? 'selected' : ''; ?>>Negrito</option>
+                                                <option value="Palawan Tribe" <?php echo (htmlspecialchars($studentIPCommunity) == 'Palawan Tribe') ? 'selected' : ''; ?>>Palawan Tribe</option>
+                                                <option value="Tumandok" <?php echo (htmlspecialchars($studentIPCommunity) == 'Tumandok') ? 'selected' : ''; ?>>Tumandok</option>
+                                                <option value="Others" <?php echo (htmlspecialchars($studentIPCommunity) === 'Others') ? 'selected' : ''; ?>>Others</option>
                                             </select>
                                         </div>
                                         
-                                        <div id="ip-other-options" class="<?php echo (getSessionData('ip-specify') == 'Others') ? '' : 'hidden'; ?>">
-                                            <span class="long">If yes, please specify:<span style="color: red;">*</span></span>
-                                            <input type="text" id="ip-other" name="ip-other" class="input-long" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo getSessionData('ip-other'); ?>">
+                                        <div id="ip-other-options" class="<?php echo (htmlspecialchars($studentIPCommunity) === 'Others') ? '' : 'hidden'; ?>">
+                                            <span class="long">If others, please insert here:<span style="color: red;">*</span></span>
+                                            <input type="text" id="ip-other" name="ip-other" class="input-long" 
+                                                pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" 
+                                                value="<?php echo (htmlspecialchars($studentIPCommunity) === 'Others' || htmlspecialchars($studentIPCommunity) === 'No') ? '' : htmlspecialchars($studentIPCommunity); ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -234,35 +276,42 @@
                                     <div class="form-group">
                                         <label>Is the child a learner with disability?<span style="color: red;">*</span></label>
                                         <div class="radio-group">
-                                            <input type="radio" id="disability-yes" name="disability" value="Yes" <?php echo (getSessionData('disability') == 'Yes') ? 'checked' : ''; ?> onclick="toggleDisabilityOptions()">
+                                            <input type="radio" id="disability-yes" name="disability" value="Yes" 
+                                                <?php echo (htmlspecialchars($studentWithDisability) !== 'No' && htmlspecialchars($studentWithDisability) !== '') ? 'checked' : ''; ?> 
+                                                onclick="toggleDisabilityOptions()">
                                             <label for="disability-yes">Yes</label>
-                                            <input type="radio" id="disability-no" name="disability" value="No" <?php echo (getSessionData('disability') == 'No') ? 'checked' : ''; ?> onclick="toggleDisabilityOptions()">
+                                            <input type="radio" id="disability-no" name="disability" value="No" 
+                                                <?php echo (htmlspecialchars($studentWithDisability) == 'No') ? 'checked' : ''; ?> 
+                                                onclick="toggleDisabilityOptions()">
                                             <label for="disability-no">No</label>
                                         </div>
-                                        
-                                        <div id="disability-options" class="<?php echo (getSessionData('disability') == 'yes') ? '' : 'hidden'; ?>">
+
+                                        <div id="disability-options" 
+                                            class="<?php echo (htmlspecialchars($studentWithDisability) !== 'No' && htmlspecialchars($studentWithDisability) !== '') ? '' : 'hidden'; ?>">
                                             <label for="disability-specify">If yes, please specify:<span style="color: red;">*</span></label>
                                             <select id="disability-specify" name="disability-specify" class="long-input" onchange="toggleDisabilityTextInput()">
                                                 <option value="">Select Disability Specify</option>
-                                                <option value="Autism Spectrum Disorder" <?php echo (getSessionData('disability-specify') == 'Autism Spectrum Disorder') ? 'selected' : ''; ?>>Autism Spectrum Disorder</option>
-                                                <option value="Blind" <?php echo (getSessionData('disability-specify') == 'Blind') ? 'selected' : ''; ?>>Blind</option>
-                                                <option value="Cancer" <?php echo (getSessionData('disability-specify') == 'Cancer') ? 'selected' : ''; ?>>Cancer</option>
-                                                <option value="Cerebral Palsy" <?php echo (getSessionData('disability-specify') == 'Cerebral Palsy') ? 'selected' : ''; ?>>Cerebral Palsy</option>
-                                                <option value="Emotional-Behavioral Disorder" <?php echo (getSessionData('disability-specify') == 'Emotional-Behavioral Disorder') ? 'selected' : ''; ?>>Emotional-Behavioral Disorder</option>
-                                                <option value="Hearing Impairment" <?php echo (getSessionData('disability-specify') == 'Hearing Impairment') ? 'selected' : ''; ?>>Hearing Impairment</option>
-                                                <option value="Intellectual Disability" <?php echo (getSessionData('disability-specify') == 'Intellectual Disability') ? 'selected' : ''; ?>>Intellectual Disability</option>
-                                                <option value="Learning Disability" <?php echo (getSessionData('disability-specify') == 'Learning Disability') ? 'selected' : ''; ?>>Learning Disability</option>
-                                                <option value="Low Vision" <?php echo (getSessionData('disability-specify') == 'Low Vision') ? 'selected' : ''; ?>>Low Vision</option>
-                                                <option value="Multiple Disorder" <?php echo (getSessionData('disability-specify') == 'Multiple Disorder') ? 'selected' : ''; ?>>Multiple Disorder</option>
-                                                <option value="Orthopedic/Physical Handicap" <?php echo (getSessionData('disability-specify') == 'Orthopedic/Physical Handicap') ? 'selected' : ''; ?>>Orthopedic/Physical Handicap</option>
-                                                <option value="Speech/Language Disorder" <?php echo (getSessionData('disability-specify') == 'Speech/Language Disorder') ? 'selected' : ''; ?>>Speech/Language Disorder</option>
-                                                <option value="Others" <?php echo (getSessionData('disability-specify') == 'Others') ? 'selected' : ''; ?>>Others</option>
+                                                <option value="Autism Spectrum Disorder" <?php echo (htmlspecialchars($studentWithDisability) == 'Autism Spectrum Disorder') ? 'selected' : ''; ?>>Autism Spectrum Disorder</option>
+                                                <option value="Blind" <?php echo (htmlspecialchars($studentWithDisability) == 'Blind') ? 'selected' : ''; ?>>Blind</option>
+                                                <option value="Cancer" <?php echo (htmlspecialchars($studentWithDisability) == 'Cancer') ? 'selected' : ''; ?>>Cancer</option>
+                                                <option value="Cerebral Palsy" <?php echo (htmlspecialchars($studentWithDisability) == 'Cerebral Palsy') ? 'selected' : ''; ?>>Cerebral Palsy</option>
+                                                <option value="Emotional-Behavioral Disorder" <?php echo (htmlspecialchars($studentWithDisability) == 'Emotional-Behavioral Disorder') ? 'selected' : ''; ?>>Emotional-Behavioral Disorder</option>
+                                                <option value="Hearing Impairment" <?php echo (htmlspecialchars($studentWithDisability) == 'Hearing Impairment') ? 'selected' : ''; ?>>Hearing Impairment</option>
+                                                <option value="Intellectual Disability" <?php echo (htmlspecialchars($studentWithDisability) == 'Intellectual Disability') ? 'selected' : ''; ?>>Intellectual Disability</option>
+                                                <option value="Learning Disability" <?php echo (htmlspecialchars($studentWithDisability) == 'Learning Disability') ? 'selected' : ''; ?>>Learning Disability</option>
+                                                <option value="Low Vision" <?php echo (htmlspecialchars($studentWithDisability) == 'Low Vision') ? 'selected' : ''; ?>>Low Vision</option>
+                                                <option value="Multiple Disorder" <?php echo (htmlspecialchars($studentWithDisability) == 'Multiple Disorder') ? 'selected' : ''; ?>>Multiple Disorder</option>
+                                                <option value="Orthopedic/Physical Handicap" <?php echo (htmlspecialchars($studentWithDisability) == 'Orthopedic/Physical Handicap') ? 'selected' : ''; ?>>Orthopedic/Physical Handicap</option>
+                                                <option value="Speech/Language Disorder" <?php echo (htmlspecialchars($studentWithDisability) == 'Speech/Language Disorder') ? 'selected' : ''; ?>>Speech/Language Disorder</option>
+                                                <option value="Others" <?php echo (!in_array(htmlspecialchars($studentWithDisability), ['Autism Spectrum Disorder', 'Blind', 'Cancer', 'Cerebral Palsy', 'Emotional-Behavioral Disorder', 'Hearing Impairment', 'Intellectual Disability', 'Learning Disability', 'Low Vision', 'Multiple Disorder', 'Orthopedic/Physical Handicap', 'Speech/Language Disorder', 'No', ''])) ? 'selected' : ''; ?>>Others</option>
                                             </select>
                                         </div>
-                                        
-                                        <div id="disability-other-options" class="<?php echo (getSessionData('disability-specify') == 'Others') ? '' : 'hidden'; ?>">
-                                            <span class="long">If yes, please specify:<span style="color: red;">*</span></span>
-                                            <input type="text" id="disability-other" name="disability-other" class="input-long" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo getSessionData('disability-other'); ?>">
+
+                                        <div id="disability-other-options" class="<?php echo (htmlspecialchars($studentWithDisability) === 'Others') ? '' : 'hidden'; ?>">
+                                            <span class="long">If others, please insert here:<span style="color: red;">*</span></span>
+                                            <input type="text" id="disability-other" name="disability-other" class="input-long" 
+                                                pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" 
+                                                value="<?php echo htmlspecialchars($studentWithDisability) === 'Others' ? htmlspecialchars($studentWithDisability) : ''; ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -270,14 +319,14 @@
                                     <div class="form-group">
                                         <label>Is your family a beneficiary of 4Ps?<span style="color: red;">*</span></label>
                                         <div class="radio-group">
-                                            <input type="radio" id="beneficiary-yes" name="beneficiary" value="Yes" <?php echo (getSessionData('beneficiary') == 'Yes') ? 'checked' : ''; ?> onclick="toggleBeneficiaryOptions()">
+                                            <input type="radio" id="beneficiary-yes" name="beneficiary" value="Yes" <?php echo (htmlspecialchars($student4PsBeneficiary) !== 'No') ? 'checked' : ''; ?> onclick="toggleBeneficiaryOptions()">
                                             <label for="beneficiary-yes">Yes</label>
-                                            <input type="radio" id="beneficiary-no" name="beneficiary" value="No" <?php echo (getSessionData('beneficiary') == 'No') ? 'checked' : ''; ?> onclick="toggleBeneficiaryOptions()">
+                                            <input type="radio" id="beneficiary-no" name="beneficiary" value="No" <?php echo (htmlspecialchars($student4PsBeneficiary) == 'No') ? 'checked' : ''; ?> onclick="toggleBeneficiaryOptions()">
                                             <label for="beneficiary-no">No</label>
                                         </div>
-                                        <div id="beneficiary-options" class="hidden">
+                                        <div id="beneficiary-options" class="<?php echo (htmlspecialchars($student4PsBeneficiary) !== 'No') ? '' : 'hidden'; ?>">
                                             <span class="long">If yes, write the 4Ps Household ID Number:</span>
-                                            <input type="text" id="beneficiary-specify" name="beneficiary-specify" class="input-long" maxlength="20" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo getSessionData('beneficiary-specify'); ?>">
+                                            <input type="text" id="beneficiary-specify" name="beneficiary-specify" class="input-long" maxlength="20" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo ($student4PsBeneficiary === "No") ? '' : htmlspecialchars($student4PsBeneficiary); ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -293,21 +342,21 @@
                                     <div class="form-group">
                                         <label for="province">Province<span style="color: red;">*</span></label>
                                         <select id="province" name="province" onchange="updateCity()">
-                                            <option value="">Select Province</option>
+                                            <option value="<?php echo htmlspecialchars($currentProvince); ?>"><?php echo htmlspecialchars($currentProvince); ?></option>
                                             <!-- Options will be populated based on data -->
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="city">Municipality/City<span style="color: red;">*</span></label>
                                         <select id="city" name="city" onchange="updateBarangay()">
-                                            <option value="">Select City</option>
+                                            <option value="<?php echo htmlspecialchars($currentCity); ?>"><?php echo htmlspecialchars($currentCity); ?></option>
                                             <!-- Options will be populated based on Province selection -->
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="barangay">Barangay<span style="color: red;">*</span></label>
                                         <select id="barangay" name="barangay">
-                                            <option value="">Select Barangay</option>
+                                            <option value="<?php echo htmlspecialchars($currentBarangay); ?>"><?php echo htmlspecialchars($currentBarangay); ?></option>
                                             <!-- Options will be populated by JavaScript -->
                                         </select>
                                     </div>
@@ -316,15 +365,15 @@
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="house-number">House Number<span style="color: red;">*</span></label>
-                                        <input type="text" id="house-number" name="house-number" value="<?php echo getSessionData('house-number'); ?>">
+                                        <input type="text" id="house-number" name="house-number" value="<?php echo htmlspecialchars($currentHouseNumber); ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="street-name">Street Name<span style="color: red;">*</span></label>
-                                        <input type="text" id="street-name" name="street-name" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo getSessionData('street-name'); ?>">
+                                        <input type="text" id="street-name" name="street-name" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($currentStreetName); ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="zip-code">Zip Code<span style="color: red;">*</span></label>
-                                        <input type="text" id="zip-code" name="zip-code" pattern="^\d{4}$" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g, '')" value="<?php echo getSessionData('zip-code'); ?>">
+                                        <input type="text" id="zip-code" name="zip-code" pattern="^\d{4}$" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g, '')" value="<?php echo htmlspecialchars($currentZipCode); ?>">
                                     </div>
                                 </div>
 
@@ -343,35 +392,35 @@
                                     <div class="input-group">
                                         <label for="province-permanent">Province<span style="color: red;">*</span></label>
                                         <select id="province-permanent" name="province-permanent" class="input-row-permanent" onchange="updateCitiesPermanent()">
-                                            <option value="">Select Province</option>
+                                            <option value="<?php echo htmlspecialchars($permanentProvince); ?>"><?php echo htmlspecialchars($permanentProvince); ?></option>
                                         </select>
                                     </div>
                                     <div class="input-group">
                                         <label for="city-permanent">Municipality/City<span style="color: red;">*</span></label>
                                         <select id="city-permanent" name="city-permanent" class="input-row-permanent" onchange="updateBarangaysPermanent()">
-                                            <option value="">Select City</option>
+                                            <option value="<?php echo htmlspecialchars($permanentCity); ?>"><?php echo htmlspecialchars($permanentCity); ?></option>
                                         </select>
                                     </div>
                                     <div class="input-group">
                                         <label for="barangay-permanent">
                                         <label for="barangay-permanent">Barangay<span style="color: red;">*</span></label>
                                         <select id="barangay-permanent" name="barangay-permanent" class="input-row-permanent">
-                                            <option value="">Select Barangay</option>
+                                            <option value="<?php echo htmlspecialchars($permanentBarangay); ?>"><?php echo htmlspecialchars($permanentBarangay); ?></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="input-row-full input-row-permanent">
                                     <div class="input-group">
                                         <label for="house-number-permanent">House Number<span style="color: red;">*</span></label>
-                                        <input type="text" id="house-number-permanent" name="house-number-permanent" class="input-row-permanent" value="<?php echo getSessionData('house-number-permanent'); ?>">
+                                        <input type="text" id="house-number-permanent" name="house-number-permanent" class="input-row-permanent" value="<?php echo htmlspecialchars($permanentHouseNo); ?>">
                                     </div>
                                     <div class="input-group">
                                         <label for="street-name-permanent">Street Name<span style="color: red;">*</span></label>
-                                        <input type="text" id="street-name-permanent" name="street-name-permanent" class="input-row-permanent" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo getSessionData('street-name-permanent'); ?>">
+                                        <input type="text" id="street-name-permanent" name="street-name-permanent" class="input-row-permanent" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($permanentStreetName); ?>">
                                     </div>
                                     <div class="input-group">
                                         <label for="zip-code-permanent">Zip Code<span style="color: red;">*</span></label>
-                                        <input type="text" id="zip-code-permanent" name="zip-code-permanent" class="input-row-permanent" pattern="^\d{4}$" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g, '')" value="<?php echo getSessionData('zip-code-permanent'); ?>">
+                                        <input type="text" id="zip-code-permanent" name="zip-code-permanent" class="input-row-permanent" pattern="^\d{4}$" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g, '')" value="<?php echo htmlspecialchars($permanentZipCode); ?>">
                                     </div>
                                 </div>
                                 <h1>Parent's Information</h1>
@@ -381,21 +430,21 @@
                                         <h3>Father's Name</h3>
                                         <div class="field-group">
                                             <label for="father-last-name">Last Name<span style="color: red;">*</span></label>
-                                            <input type="text" id="father-last-name" name="father-last-name" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo getSessionData('father-last-name'); ?>">
+                                            <input type="text" id="father-last-name" name="father-last-name" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($fatherLastName); ?>">
                                         </div>
                                         <div class="field-group">
                                             <label for="father-first-name">First Name<span style="color: red;">*</span></label>
-                                            <input type="text" id="father-first-name" name="father-first-name" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo getSessionData('father-first-name'); ?>">
+                                            <input type="text" id="father-first-name" name="father-first-name" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($fatherFirstName); ?>">
                                         </div>
                                         <div class="field-row">
                                             <div class="field-group">
                                                 <label for="father-middle-name">Middle Name <span class="opt">(optional)</span></label>
-                                                <input type="text" id="father-middle-name" name="father-middle-name" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo getSessionData('father-middle-name'); ?>">
+                                                <input type="text" id="father-middle-name" name="father-middle-name" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($fatherMiddleName); ?>">
                                             </div>
                                         </div>
                                         <div class="field-group">
                                             <label for="father-contact-number">Contact Number<span style="color: red;">*</span></label>
-                                            <input type="text" id="father-contact-number" name="father-contact-number" placeholder="09XXXXXXXXX" maxlength="11" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo getSessionData('father-contact-number'); ?>">
+                                            <input type="text" id="father-contact-number" name="father-contact-number" placeholder="09XXXXXXXXX" maxlength="11" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo htmlspecialchars($fatherContactNumber); ?>">
                                         </div>
                                     </div>
 
@@ -403,22 +452,22 @@
                                         <h3>Mother's Name</h3>
                                         <div class="field-group">
                                             <label for="mother-last-name">Last Name<span style="color: red;">*</span></label>
-                                            <input type="text" id="mother-last-name" name="mother-last-name" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo getSessionData('mother-last-name'); ?>">
+                                            <input type="text" id="mother-last-name" name="mother-last-name" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($motherLastName); ?>">
                                         </div>
                                         <div class="field-group">
                                             <label for="mother-first-name">First Name<span style="color: red;">*</span></label>
-                                            <input type="text" id="mother-first-name" name="mother-first-name" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo getSessionData('mother-first-name'); ?>">
+                                            <input type="text" id="mother-first-name" name="mother-first-name" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($motherFirstName); ?>">
                                         </div>
                                         <div class="field-row">
                                             <div class="field-group half">
                                                 <label for="mother-middle-name">Middle Name <span class="opt">(optional)</span></label>
-                                                <input type="text" id="mother-middle-name" name="mother-middle-name" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo getSessionData('mother-middle-name'); ?>">
+                                                <input type="text" id="mother-middle-name" name="mother-middle-name" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($motherMiddleName); ?>">
                                             </div>
                                         </div>
                                         <div class="field-group">
                                             <label for="mother-contact-number">Contact Number<span style="color: red;">*</span></label>
                                             <input type="text" ```php
-                                            id="mother-contact-number" name="mother-contact-number" placeholder="09XXXXXXXXX" maxlength="11" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo getSessionData('mother-contact-number'); ?>">
+                                            id="mother-contact-number" name="mother-contact-number" placeholder="09XXXXXXXXX" maxlength="11" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo htmlspecialchars($motherContactNumber); ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -428,19 +477,19 @@
                                     <div class="field-row">
                                         <div class="field-group half-width">
                                             <label for="guardian-last-name">Last Name<span style="color: red;">*</span></label>
-                                            <input type="text" id="guardian-last-name" name="guardian-last-name" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo getSessionData('guardian-last-name'); ?>">
+                                            <input type="text" id="guardian-last-name" name="guardian-last-name" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($guardianLastName); ?>">
                                         </div>
                                         <div class="field-group half-width">
                                             <label for="guardian-first-name">First Name<span style="color: red;">*</span></label>
-                                            <input type="text" id="guardian-first-name" name="guardian-first-name" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo getSessionData('guardian-first-name'); ?>">
+                                            <input type="text" id="guardian-first-name" name="guardian-first-name" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($guardianFirstName); ?>">
                                         </div>
                                         <div class="field-group half-width">
                                             <label for="guardian-middle-name">Middle Name <span class="opt">(optional)</span></label>
-                                            <input type="text" id="guardian-middle-name" name="guardian-middle-name" pattern="[A-Za-z]+" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '');" value="<?php echo getSessionData('guardian-middle-name'); ?>">
+                                            <input type="text" id="guardian-middle-name" name="guardian-middle-name" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($guardianMiddleName); ?>">
                                         </div>
                                         <div class="field-group half-width">
                                             <label for="guardian-contact-number">Contact Number<span style="color: red;">*</span></label>
-                                            <input type="text" id="guardian-contact-number" name="guardian-contact-number" placeholder="09XXXXXXXXX" maxlength="11" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo getSessionData('guardian-contact-number'); ?>">
+                                            <input type="text" id="guardian-contact-number" name="guardian-contact-number" placeholder="09XXXXXXXXX" maxlength="11" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo htmlspecialchars($guardianContactNumber); ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -450,19 +499,19 @@
                                     <div class="input-inline">
                                         <div class="input-container">
                                             <label for="last-grade">Last Grade Level Completed<span style="color: red;">*</span></label>
-                                            <input type="text" id="last-grade" name="last-grade" value="<?php echo getSessionData('last-grade'); ?>">
+                                            <input type="text" id="last-grade" name="last-grade" value="<?php echo htmlspecialchars($lastGradeLevel); ?>">
                                         </div>
                                         <div class="input-container">
                                             <label for="last-school-year">Last School Year Attended<span style="color: red;">*</span></label>
-                                            <input type="text" id="last-school-year" name="last-school-year" value="<?php echo getSessionData('last-school-year'); ?>">
+                                            <input type="text" id="last-school-year" name="last-school-year" placeholder="20XX-20XX" value="<?php echo htmlspecialchars($lastSchoolYear); ?>">
                                         </div>
                                         <div class="input-container">
                                             <label for="last-school">Last School Attended<span style="color: red;">*</span></label>
-                                            <input type="text" id="last-school" name="last-school" value="<?php echo getSessionData('last-school'); ?>">
+                                            <input type="text" id="last-school" name="last-school" value="<?php echo htmlspecialchars($lastSchoolName); ?>">
                                         </div>
                                         <div class="input-container">
-                                            <label for="school-id">School ID<span style="color: red;">*</span></label>
-                                            <input type="text" id="school-id" name="school-id" maxlength="6" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo getSessionData('school-id'); ?>">
+                                            <label for="school-id">School ID <span class="opt">(optional)</span></label>
+                                            <input type="text" id="school-id" name="school-id" maxlength="6" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo htmlspecialchars($lastSchoolID); ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -470,17 +519,20 @@
                                 <h1>Enrollment Details</h1>
                                     <div class="input-inline">
                                         <div class="input-container">
+                                            <label for="student-id">Generated Student ID Number</label>
+                                            <input type="text" id="student-id" name="studentID" value="<?php echo htmlspecialchars($studentIDNumber); ?>" readonly>
+                                        </div>
+                                        <div class="input-container">
                                             <label for="student-type">Student Type</label>
-                                            <input type="text" id="student-type" name="studentType" disabled value="<?php echo isset($_SESSION['enrolleeType']) ? htmlspecialchars($_SESSION['enrolleeType']) : ''; ?>">
+                                            <input type="text" id="student-type" name="studentType" value="<?php echo isset($_SESSION['enrolleeType']) ? htmlspecialchars($_SESSION['enrolleeType']) : ''; ?>" readonly>
                                         </div>
                                         <div class="input-container">
                                             <label for="grade-level">Grade Level to Enroll</label>
-                                            <input type="text" id="grade-level" name="gradeLevel" disabled value="<?php echo isset($_SESSION['gradeLevel']) ? htmlspecialchars($_SESSION['gradeLevel']) : ''; ?>">
+                                            <input type="text" id="grade-level" name="gradeLevel" value="<?php echo isset($_SESSION['gradeLevel']) ? htmlspecialchars($_SESSION['gradeLevel']) : ''; ?>" readonly>
                                         </div>
                                         <div class="input-container">
                                             <label for="school-year">School Year</label>
-                                            <input type="text" id="school-year" name="school-year" value="<?php echo htmlspecialchars($academicYear); ?>" readonly>
-                                            <input type="hidden" id="acadID" name="acadID" value="<?php echo htmlspecialchars($acadID); ?>">
+                                            <input type="text" id="school-year" name="schoolYear" value="<?php echo htmlspecialchars($academicYear); ?>" readonly>
                                         </div>
                                     </div>
 
