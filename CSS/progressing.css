@@ -1,0 +1,74 @@
+.progress-container {
+    display: flex;
+    width: 95%;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    flex-wrap: wrap;
+    background-color: #5B5B5B;
+}
+
+.progress-container a {
+    text-decoration: none;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #4a4a4a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.step-number.inactive {
+    background-color: #6d6d6d;
+    color: #b3b3b3;
+}
+
+.step-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.step-text.inactive {
+    color: #b3b3b3;
+}
+
+.arrow {
+    font-size: 20px;
+    color: #b3b3b3;
+    margin: 0 10px;
+}
+
+.step.active .step-number {
+    background-color: #fff; /* Active background color */
+    color: #4a4a4a; /* Active text color */
+}
+
+.step.active .step-text {
+    color: #fff; /* Active text color */
+}
+
+.step.completed .step-number {
+    background-color: #4CAF50; /* Completed color */
+    color: #fff; /* Completed text color */
+}
+
+.step.completed .step-text {
+    color: #4CAF50; /* Completed text color */
+}

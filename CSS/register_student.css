@@ -1,0 +1,226 @@
+body {
+                font-family: 'Arial', sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background-color: #FFF0E7;
+            }
+
+            .container {
+                display: flex;
+                background-color: #fff;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                overflow: hidden;
+            }
+
+            @media (max-width: 768px) {
+
+                .btn {
+                    flex-direction: column;
+                    height: auto;
+                    width: 100%;
+                }
+
+                .login, .signup {
+                    width: 100%;
+                    height: 45px;
+                    margin: 10px 0;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+               }
+           }
+
+            .btn {
+                margin-top: 25px;
+                margin-bottom: 25px;
+                height: 60px;
+                width: 300px;
+                border-radius: 50px;
+                display: flex;
+                background-color: #FFF0E7;
+                box-shadow: 1px 1px gray;
+                position: relative;
+                z-index: 2;
+            }
+            .login {
+                color: #A01B1B;
+                z-index: 3;
+                position: absolute;
+                margin-left: 15px;
+            }
+            .signup {
+                color: #FFFFFF;
+                position: absolute;
+                margin-left: 75px;
+            }
+            .login,
+            .signup {
+                border: none;
+                outline: none;
+                background-color: transparent;
+                cursor: pointer;
+                font-family: 'Segoe UI', san-serif; font-weight: 700; font-size: 16px;
+                text-align: center;
+            }
+
+            .login {
+                height: 45px;
+                width: 150px;
+                border-radius: 50px;
+                background-color: transparent;
+                position: absolute;
+                z-index: 1;
+            }
+            .signup {
+                height: 45px;
+                width: 150px;
+                border-radius: 50px;
+                background-color: #A01B1B;
+                position: absolute;
+                left: 67px;
+            }
+
+            .form-container {
+                padding: 30px;
+                margin-bottom: 25px;
+                width: 300px;
+            }
+
+            .form-container h2 {
+                margin-bottom: 20px;
+                color: #333;
+            }
+
+            .form-container input[type="text"],
+            .form-container input[type="password"],
+            .form-container input[type="con-password"] {
+                width: 300px;
+                padding: 10px;
+                margin-top: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+
+            .form-container input[type="submit"] {
+                background-color: #FF902E;
+                margin-top: 25px;
+                width: 300px;
+                color: #fff;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 50px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            .form-container input[type="submit"]:hover {
+                background-color: #A01B1B;
+            }
+
+            .form-container a {
+                display: block;
+                text-align: center;
+                margin-top: 10px;
+                color: #333;
+                text-decoration: none;
+            }
+
+            .form-container a:hover {
+                text-decoration: underline;
+            }
+
+            .image-container {
+                width: 400px;
+                background-color: #f2f2f2;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .image-container img {
+                width: 400px;
+                height: auto;
+            }
+
+            .check-icon {
+                font-size: 12px;
+                color: green;
+              }
+              
+              .cross-icon {
+                font-size: 12px;
+                color: red;
+              }
+
+              .password-container {
+                position: relative;
+                display: inline-block;
+                width: 100%;
+            }
+            .toggle-password {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                user-select: none; /* Prevent text selection */
+            }
+
+              .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+            
+            .modal-content {
+                background-color: #fefefe;
+                margin: 15% auto; /* 15% from the top and centered */
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%; /* Could be more or less, depending on screen size */
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            .modal-content h2{
+                border-bottom: #A01B1B 2px solid;
+                padding: 10px;
+            }
+            
+            .close-button {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+            
+            .close-button:hover,
+            .close-button:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            /* Responsive styles */
+            @media (max-width: 768px) {
+                .container {
+                    flex-direction: column;
+                }
+
+                .form-container,
+                .image-container {
+                    width: 100%;
+                }
+            }

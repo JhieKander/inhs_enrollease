@@ -1,0 +1,207 @@
+.profile {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.profile-img img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #A01B1B;
+}
+
+.profile-info {
+    margin-left: 15px;
+    text-align: center;
+}
+
+.comewel{
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+    color: #A4AFB8;
+}
+
+.profile-info p{
+    font-size: 14px;
+    color: #A4AFB8;
+}
+
+.profile-info button {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #A01B1B;
+    background-color: #FFF0E7;
+}
+
+.profile-info button:hover {
+    color: #FFF0E7;
+    background-color: #A01B1B;
+}
+
+.mod {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .mod-content {
+            background-color: #fefefe;
+            font-size: 20px;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 30px;
+            border: 1px solid #888;
+            width: 60%; /* Could be more or less, depending on screen size */
+        }
+
+        .mod-content h4 {
+            font-weight: bold;
+            margin-top: 20px;
+            padding-bottom: 5px;
+            text-align: center;
+            color: #5B5B5B;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Button styles */
+        .btn-ok {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            border: none; /* No border */
+            padding: 10px 20px; /* Padding */
+            text-align: center; /* Center text */
+            text-decoration: none; /* No underline */
+            display: inline-block; /* Inline-block */
+            font-size: 16px; /* Font size */
+            margin: 4px 2px; /* Margin */
+            cursor: pointer; /* Pointer cursor on hover */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .btn-cancel {
+            background-color: #f0f0f0; /* Light gray background */
+            color: black; /* Black text */
+            border: none; /* No border */
+            padding: 10px 20px; /* Padding */
+            text-align: center; /* Center text */
+            text-decoration: none; /* No underline */
+            display: inline-block; /* Inline-block */
+            font-size: 16px; /* Font size */
+            margin: 4px 2px; /* Margin */
+            cursor: pointer; /* Pointer cursor on hover */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .btn-ok:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        .btn-cancel:hover {
+            background-color: #e0e0e0; /* Darker gray on hover */
+        }
+
+        /* Responsive Design */
+    @media screen and (max-width: 768px) {
+        .header {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .welcome {
+            flex-direction: column;
+        }
+
+        .profile-info button {
+            margin-top: 10px;
+        }
+
+        .application {
+            flex-direction: column;
+        }
+
+        .form {
+            flex-direction: column;
+        }
+
+        .option {
+            width: 50%;
+        }
+
+        .option button {
+            text-align: center;
+        }
+
+        .container {
+            padding: 10px;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .profile {
+            flex-direction: column;
+        }
+
+        .profile-info {
+            margin-left: 0;
+            text-align: center;
+        }
+
+        .profile-info button {
+            width: 100%;
+        }
+
+        .application-note h2 {
+            font-size: 18px;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #d3d3d3;
+            }
+            .content {
+                width: 100%;
+            }
+            .form-group {
+                flex-direction: column;
+            }
+            .form-group label {
+                max-width: 100%;
+            }
+            .form-row {
+                flex-direction: column;
+            }
+            .form-row .form-group {
+                margin-right: 0;
+            }
+        }

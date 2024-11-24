@@ -1,0 +1,27 @@
+.sidebar {
+            width: 200px;
+            padding: 20px;
+            border-right: 1px solid #d3d3d3;
+            box-sizing: border-box;
+        }
+        .sidebar a {
+            display: block;
+            color: black;
+            text-decoration: none;
+            margin-bottom: 20px;
+            font-size: 16px;
+            padding: 10px;
+            border-left: #5B5B5B solid 3px;
+        }
+        .sidebar a.active {
+            color: #800000;
+            font-weight: bold;
+            border-left: #800000 solid 3px;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #d3d3d3;
+            }
+        }

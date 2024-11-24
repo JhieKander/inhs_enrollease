@@ -1,0 +1,245 @@
+        /* General Styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #FFFFFF;
+        color: #333;
+    }
+
+    /* Welcome Section Styles */
+    .contain{
+        padding: 20px;
+        padding-right: 20px;
+    }
+    
+    .welcome {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .application {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        background-color: #FFEBE4;
+        justify-content: center;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .application-note {
+        text-align: justify;
+        width: 100%;
+    }
+
+    .application-button {
+        margin-top: 20px;
+    }
+
+    .application-button button{
+        background-color: #82AF43;
+        color: #FFFFFF;
+    }
+
+    .form{
+        display: flex;
+    }
+
+    /* Form Styles */
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .content h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-align: left;
+            color: #5B5B5B;
+        }
+        .content h2 {
+            font-size: 18px;
+            margin-top: 20px;
+            border-bottom: 2px solid #FFA500;
+            padding-bottom: 5px;
+            text-align: left;
+            color: #5B5B5B;
+        }
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            width: 100%;
+            max-width: 150px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            flex-grow: 1;
+            padding: 5px;
+            border: 1px solid #d3d3d3;
+            border-radius: 5px;
+            min-width: 200px;
+        }
+        .form-group input[disabled] {
+            background-color: #f0f0f0;
+        }
+        .form-group input[type="password"] {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .save-button {
+            text-align: right;
+            margin-top: 20px;
+        }
+        .save-button button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .form-row .form-group {
+            flex: 1;
+            min-width: 200px;
+            margin-right: 10px;
+        }
+        .form-row .form-group:last-child {
+            margin-right: 0;
+        }
+        /* Modal Styles */
+        .model {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .model-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+        .model-content h2 {
+            font-size: 18px;
+            margin-top: 20px;
+            border-bottom: 2px solid #A01B1B;
+            padding-bottom: 5px;
+            text-align: left;
+            color: #5B5B5B;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+        .header {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .welcome {
+            flex-direction: column;
+        }
+
+        .profile-info button {
+            margin-top: 10px;
+        }
+
+        .application {
+            flex-direction: column;
+        }
+
+        .form {
+            flex-direction: column;
+        }
+
+        .option {
+            width: 50%;
+        }
+
+        .option button {
+            text-align: center;
+        }
+
+        .container {
+            padding: 10px;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .profile {
+            flex-direction: column;
+        }
+
+        .profile-info {
+            margin-left: 0;
+            text-align: center;
+        }
+
+        .profile-info button {
+            width: 100%;
+        }
+
+        .application-note h2 {
+            font-size: 18px;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #d3d3d3;
+            }
+            .content {
+                width: 100%;
+            }
+            .form-group {
+                flex-direction: column;
+            }
+            .form-group label {
+                max-width: 100%;
+            }
+            .form-row {
+                flex-direction: column;
+            }
+            .form-row .form-group {
+                margin-right: 0;
+            }
+        }

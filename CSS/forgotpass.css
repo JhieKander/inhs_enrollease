@@ -1,0 +1,209 @@
+
+            body {
+                font-family: 'Arial', sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background-color: #FFF0E7;
+            }
+
+            .container {
+                display: flex;
+                background-color: #fff;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                overflow: hidden;
+            }
+
+            @media (max-width: 768px) {
+
+                .btn {
+                    flex-direction: column;
+                    height: auto;
+                    width: 100%;
+                }
+
+                .login, .signup {
+                    width: 100%;
+                    height: 45px;
+                    margin: 10px 0;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+               }
+           }
+
+            .btn {
+                margin-top: 25px;
+                margin-bottom: 25px;
+                height: 60px;
+                width: 300px;
+                border-radius: 50px;
+                display: flex;
+                background-color: #FFF0E7;
+                box-shadow: 1px 1px gray;
+                position: relative;
+                z-index: 2;
+            }
+            .btn p {
+                color: #A01B1B;
+                position: absolute;
+                border: none;
+                outline: none;
+                background-color: transparent;
+                cursor: pointer;
+                font-family: 'Segoe UI', san-serif; font-weight: 700; font-size: 20px;
+                text-align: center;
+                height: 45px;
+                width: 100%;
+                border-radius: 50px;
+            }
+
+            .form-container {
+                padding: 30px;
+                margin-bottom: 25px;
+                width: 300px;
+            }
+
+            .form-container h2 {
+                margin-bottom: 20px;
+                color: #333;
+            }
+
+            .form-container input[type="text"],
+            .form-container input[type="password"] {
+                width: 300px;
+                padding: 10px;
+                margin-top: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+
+            .form-container input[type="submit"] {
+                background-color: #A01B1B;
+                margin-top: 25px;
+                width: 300px;
+                color: #fff;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 50px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            .form-container input[type="submit"]:hover {
+                background-color: #3A0A0A;
+            }
+
+            .form-container a {
+                display: block;
+                text-align: center;
+                margin-top: 10px;
+                color: #333;
+                text-decoration: none;
+            }
+
+            .form-container a:hover {
+                text-decoration: underline;
+            }
+
+            .image-container {
+                width: 400px;
+                background-color: #f2f2f2;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .image-container img {
+                width: 400px;
+                height: auto;
+            }
+
+            .password-container {
+                position: relative;
+                display: inline-block;
+                width: 100%;
+            }
+            .toggle-password {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                user-select: none; /* Prevent text selection */
+            }
+
+            .modal {
+                padding: 20px;
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 10; /* Sit on top, ensure this is higher than other elements */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0, 0, 0); /* Fallback color */
+                background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+            }
+            
+            .modal-content {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #fefefe;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%; /* Could be more or less, depending on screen size */
+                max-width: 500px; /* Optional: set a max-width for better appearance */
+                position: fixed; /* Use fixed positioning */
+                top: 50%; /* Position from the top */
+                left: 50%; /* Position from the left */
+                transform: translate(-50%, -50%); /* Center the modal */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: add some shadow for better visibility */
+            }
+            
+            .modal-content h2 {
+                margin-bottom: 10px;
+                border-bottom: #A01B1B 2px solid;
+            }
+
+            .modal-content button{
+                background-color: #82AF43;
+                padding: 10px;
+                color: #fff;
+                height: 40px;
+                border-radius: 10px;
+                width: 100px;
+                border: none;
+            }
+            
+            .close-button {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+            
+            .close-button:hover,
+            .close-button:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            /* Responsive styles */
+            @media (max-width: 768px) {
+                .container {
+                    flex-direction: column;
+                }
+
+                .form-container,
+                .image-container {
+                    width: 100%;
+                }
+            }
