@@ -69,7 +69,7 @@
                 if (is_uploaded_file($tmpName)) {
                     $response = extractTextFromImage($tmpName, $apiKey);
                     $text = $response['responses'][0]['textAnnotations'][0]['description'] ?? '';
-                    $generalAverage = 89; //extractGeneralAverage($text)
+                    $generalAverage = extractGeneralAverage($text); //extractGeneralAverage($text)
                     break; // Process only the first uploaded file
                 }
             }
