@@ -2,7 +2,7 @@
     session_start();
 
     // Google Vision API key
-    $apiKey = 'AIzaSyBSGAzrwz-kTKj27YLfgnXZzMQtIRgir4E';
+    $apiKey = '';
 
     // Function to call Google Vision API to extract text from the image
     function extractTextFromImage($imagePath, $apiKey) {
