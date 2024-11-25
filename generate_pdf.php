@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // If returnee is provided, check "Yes", otherwise check "No"
-    if (!empty($last_grade && $last_school_year && $last_school && $school_id)) {
+    if (!empty($last_grade) && !empty($last_school_year) && !empty($last_school) && !empty($school_id)) {
         $pdf->SetXY(163.5, 42.7); // Adjust the position to the returnee "Yes" checkbox
         $pdf->Cell(3, 3, 'X', 0, 1);
     } else {
@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($birthdate)) {
         $birthDate = new DateTime($birthdate);
         $today = new DateTime('today'); 
-        $age = $birthDate->diff($today)->y; // Get the difference in years
+        $age = $birthDate->diff($today )->y; // Get the difference in years
     } else {
         $formatted_birthdate = ''; 
         $age = ''; 
@@ -174,7 +174,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdf->Cell(100, 10, $indigenous_people_specify, 0, 1); 
             $indigenousToSave = $indigenous_people_specify;
         }
-    }else if($indigenous_people === 'No'){
+    } else if($indigenous_people === 'No'){
         $indigenousToSave = 'No';
     }
 
@@ -246,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdf->Cell(100, 10, $beneficiary_specify, 0, 1); // Display specified beneficiary
             $beneficiarytoSave = $beneficiary_specify;
         }
-    }else if($beneficiary === 'No'){
+    } else if($beneficiary === 'No'){
         $beneficiarytoSave = 'No';
     }
 
@@ -387,53 +387,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mother_middlename = empty($mother_middlename) ? null : $mother_middlename;
     $guardian_middlename = empty($guardian_middlename) ? null : $guardian_middlename;
     $school_id = empty($school_id) ? null : $school_id;
-    
+
+    // Set defaults for optional fields
+    $indigenousToSave = empty($indigenousToSave) ? null : $indigenousToSave;
+    $disabilityToSave = empty($disabilityToSave) ? null : $disabilityToSave;
+    $beneficiarytoSave = empty($beneficiarytoSave) ? null : $beneficiarytoSave;
+
+    // Bind parameters
     $stmt->bind_param("sssssssssssssssssssssssssssssssssssssssssssi", 
-        $LRN, 
-        $student_firstname, 
-        $student_middlename, 
-        $student_lastname, 
-        $student_extension_name, 
-        $gender, 
-        $birthdate, 
-        $mother_tongue, 
-        $place_of_birth, 
-        $psa_birth_certificate, 
-        $indigenousToSave, 
-        $disabilityToSave, 
-        $beneficiarytoSave, 
-        $country, 
-        $province, 
-        $city, 
-        $barangay, 
-        $street_name, 
-        $house_number, 
-        $zip_code,
-        $permanent_country, 
-        $permanent_province, 
-        $permanent_city, 
-        $permanent_barangay, 
-        $permanent_street_name, 
-        $permanent_house_number, 
-        $permanent_zip_code,
-        $father_firstname, 
-        $father_middlename, 
-        $father_lastname, 
-        $father_contact, 
-        $mother_firstname, 
-        $mother_middlename, 
-        $mother_lastname, 
-        $mother_contact, 
-        $guardian_firstname, 
-        $guardian_middlename, 
-        $guardian_lastname, 
-        $guardian_contact, 
-        $last_grade, 
-        $last_school_year, 
-        $last_school, 
-        $school_id, 
-        $studentIDNumber
-    );
+ $LRN, 
+    $student_firstname, 
+    $student_middlename, 
+    $student_lastname, 
+    $student_extension_name, 
+    $gender, 
+    $birthdate, 
+    $mother_tongue, 
+    $place_of_birth, 
+    $psa_birth_certificate, 
+    $indigenousToSave, 
+    $disabilityToSave, 
+    $beneficiarytoSave, 
+    $country, 
+    $province, 
+    $city, 
+    $barangay, 
+    $street_name, 
+    $house_number, 
+    $zip_code,
+    $permanent_country, 
+    $permanent_province, 
+    $permanent_city, 
+    $permanent_barangay, 
+    $permanent_street_name, 
+    $permanent_house_number, 
+    $permanent_zip_code,
+    $father_firstname, 
+    $father_middlename, 
+    $father_lastname, 
+    $father_contact, 
+    $mother_firstname, 
+    $mother_middlename, 
+    $mother_lastname, 
+    $mother_contact, 
+    $guardian_firstname, 
+    $guardian_middlename, 
+    $guardian_lastname, 
+    $guardian_contact, 
+    $last_grade, 
+    $last_school_year, 
+    $last_school, 
+    $school_id, 
+    $studentIDNumber
+);
 
     // Execute the update query
     if ($stmt->execute()) {

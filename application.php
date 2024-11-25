@@ -238,7 +238,7 @@
                                         <label>Belonging to any Indigenous People (IP) Community Indigenous Cultural Community<span style="color: red;">*</span></label>
                                         <div class="radio-group">
                                             <input type="radio" id="ip-yes" name="ip" value="Yes" 
-                                                <?php echo (htmlspecialchars($studentIPCommunity) !== 'No') ? 'checked' : ''; ?> 
+                                                <?php echo (htmlspecialchars($studentIPCommunity) !== 'No' && htmlspecialchars($studentIPCommunity) !== '') ? 'checked' : ''; ?> 
                                                 onclick="toggleIPOptions()">
                                             <label for="ip-yes">Yes</label>
                                             <input type="radio" id="ip-no" name="ip" value="No" 
@@ -247,7 +247,7 @@
                                             <label for="ip-no">No</label>
                                         </div>
                                         
-                                        <div id="ip-options" class="<?php echo (htmlspecialchars($studentIPCommunity) !== 'No') ? '' : 'hidden'; ?>">
+                                        <div id="ip-options" class="<?php echo (htmlspecialchars($studentIPCommunity) !== 'No' && htmlspecialchars($studentIPCommunity) !== '') ? '' : 'hidden'; ?>">
                                             <label for="ip-specify">If yes, please specify:<span style="color: red;">*</span></label>
                                             <select id="ip-specify" name="ip-specify" class="long-input" onchange="toggleIOtherTextInput()">
                                                 <option value="" <?php echo (htmlspecialchars($studentIPCommunity) === '') ? 'selected' : ''; ?>>Select IP Specify</option>
@@ -319,12 +319,12 @@
                                     <div class="form-group">
                                         <label>Is your family a beneficiary of 4Ps?<span style="color: red;">*</span></label>
                                         <div class="radio-group">
-                                            <input type="radio" id="beneficiary-yes" name="beneficiary" value="Yes" <?php echo (htmlspecialchars($student4PsBeneficiary) !== 'No') ? 'checked' : ''; ?> onclick="toggleBeneficiaryOptions()">
+                                            <input type="radio" id="beneficiary-yes" name="beneficiary" value="Yes" <?php echo (htmlspecialchars($student4PsBeneficiary) !== 'No' && htmlspecialchars($student4PsBeneficiary) !== '') ? 'checked' : ''; ?> onclick="toggleBeneficiaryOptions()">
                                             <label for="beneficiary-yes">Yes</label>
                                             <input type="radio" id="beneficiary-no" name="beneficiary" value="No" <?php echo (htmlspecialchars($student4PsBeneficiary) == 'No') ? 'checked' : ''; ?> onclick="toggleBeneficiaryOptions()">
                                             <label for="beneficiary-no">No</label>
                                         </div>
-                                        <div id="beneficiary-options" class="<?php echo (htmlspecialchars($student4PsBeneficiary) !== 'No') ? '' : 'hidden'; ?>">
+                                        <div id="beneficiary-options" class="<?php echo (htmlspecialchars($student4PsBeneficiary) !== 'No' && htmlspecialchars($student4PsBeneficiary) !== '') ? '' : 'hidden'; ?>">
                                             <span class="long">If yes, write the 4Ps Household ID Number:</span>
                                             <input type="text" id="beneficiary-specify" name="beneficiary-specify" class="input-long" maxlength="20" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo ($student4PsBeneficiary === "No") ? '' : htmlspecialchars($student4PsBeneficiary); ?>">
                                         </div>
@@ -585,12 +585,33 @@
             </div>
         </div>
 
+        <!-- Warning Modal -->
+        <div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="warningModalLabel">Warning</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Please fill in all required fields before submitting the form.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Include Select2 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <!-- Include Select2 JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <!-- Include Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="JavaScript/required_fields.js"></script>
     <script src="JavaScript/radio_button.js"></script>
     <script src="JavaScript/birthplace.js"></script>
     <script src="JavaScript/address.js"></script>
@@ -599,72 +620,6 @@
 
 <!-- Include Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const submitButton = document.getElementById('submitButton');
-    const downloadButton = document.getElementById('downloadButton');
-    const continueButton = document.getElementById('save-continue-button');
-    const gradeLevelInput = document.getElementById('grade-level');
-
-    continueButton.addEventListener('click', function(event) {
-        event.preventDefault();  // Prevent page refresh
-
-        // Prepare form data
-        const formData = new FormData(document.getElementById('application_form'));
-        formData.append('gradeLevel', gradeLevelInput.value);  // Include grade level
-
-     // Disable submit button initially
-        submitButton.disabled = true;
-
-    // Listen for the download button's form submission
-        document.getElementById('downloadForm').addEventListener('submit', function(event) {
-            event.preventDefault();  // Prevent the default form submission
-
-            // Simulate the download delay
-            setTimeout(function() {
-                // Enable submit button after download
-                submitButton.disabled = false;
-
-                submitButton.classList.remove('btn-secondary'); // Remove any previous style class if needed
-                submitButton.classList.add('btn', 'btn-success'); // Apply btn-success Bootstrap classes
-
-
-                // Change download button text and style
-                downloadButton.innerHTML = 'Downloaded! <i class="fas fa-check"></i>';
-                downloadButton.classList.remove('btn-success');
-                downloadButton.classList.add('btn-secondary');
-                downloadButton.disabled = true;  // Disable download button after one click
-            }, 500); // Adjust delay as needed for download completion
-
-            // Proceed with actual download after the delay
-            event.target.submit();
-        });
-        
-        // AJAX request to generate PDF
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'generate_pdf.php', true);
-        xhr.responseType = 'blob';  // Expect PDF as blob
-
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                // Create blob URL for PDF
-                const pdfBlob = xhr.response;
-                const url = window.URL.createObjectURL(pdfBlob);
-
-                // Set PDF iframe source with a cache-busting parameter
-                const iframe = document.getElementById('pdfViewer');
-                iframe.src = `temp_filled_enrollment_form.pdf?timestamp=${new Date().getTime()}`;
-
-                // Show modal
-                const pdfModal = new bootstrap.Modal(document.getElementById('pdfModal'));
-                pdfModal.show();
-            }
-        };
-        xhr.send(formData);  // Send form data
-    });
-});
-</script>
 
 </body>
 </html>
