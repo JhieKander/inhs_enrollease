@@ -5,6 +5,12 @@
 
     // Check if the form was submitted to save the data temporarily
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['save_form'])) {
+        // Validate the form data
+        if (!validateEnrollmentForm($_POST)) {
+            // If validation fails, the modal will be shown via the function
+            return; // Exit if validation fails
+        }
+
         // Store form data in session variables for each field
         $_SESSION['user_data'] = $_POST; 
     }
@@ -98,6 +104,8 @@
     
     <link rel="stylesheet" href="CSS/normalize.css">
     <link rel="stylesheet" href="CSS/application.css">
+
+    <script src="JavaScript/requiredfields.js"></script>
 
     <style>
     @keyframes bounce {
@@ -563,6 +571,24 @@
         </div>
     </main>
 
+    <!-- Modal Structure -->
+    <div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="warningModalLabel">Required Fields are Empty</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="modalMessage">Please fill in the following required fields:</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
       <!-- Modal to display PDF in iframe -->
         <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- Centered modal -->
@@ -585,38 +611,27 @@
             </div>
         </div>
 
-        <!-- Warning Modal -->
-        <div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="warningModalLabel">Warning</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Please fill in all required fields before submitting the form.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Include jQuery -->
+    <!-- jQuery (required for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Include Select2 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
     <!-- Include Select2 JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <!-- Include Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="JavaScript/required_fields.js"></script>
+    
     <script src="JavaScript/radio_button.js"></script>
     <script src="JavaScript/birthplace.js"></script>
     <script src="JavaScript/address.js"></script>
     <script src="JavaScript/button.js"></script>
     <script src="JavaScript/grade_level.js"></script>
+    <script src="JavaScript/generatePDF.js"></script>
 
 <!-- Include Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

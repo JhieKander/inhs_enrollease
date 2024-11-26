@@ -477,6 +477,7 @@
         .button:hover {
             background-color: #82AF43;
         }
+        
     /* Responsive Design */
     @media screen and (max-width: 768px) {
         .header {
