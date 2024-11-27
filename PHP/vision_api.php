@@ -141,106 +141,271 @@
         return null;
     }
 
+    // Function to get student's last name
+    function getStudentLastName($conn, $studentId) {
+        $query = "SELECT Student_LastName FROM student_profile WHERE StudentID_Number = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('s', $studentId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($row = $result->fetch_assoc()) {
+            return $row['Student_LastName'];
+        }
+        return null;
+    }
+
+    // Function to handle file upload with new naming structure
+    function handleFileUpload($file, $directory, $prefix, $studentId, $lastName) {
+        // Set maximum file size (5MB)
+        $maxFileSize = 5 * 1024 * 1024; // 5MB in bytes
+        
+        if ($file['size'] > $maxFileSize) {
+            throw new Exception("File size too large. Maximum size is 5MB.");
+        }
+        
+        $fileInfo = pathinfo($file['name']);
+        $extension = strtolower($fileInfo['extension']);
+        
+        // Allow only specific file types
+        $allowedTypes = ['jpg', 'jpeg', 'png', 'pdf'];
+        if (!in_array($extension, $allowedTypes)) {
+            throw new Exception("Invalid file type. Allowed types: JPG, PNG, PDF");
+        }
+        
+        // Create new filename with date and time
+        $dateTime = date('Y-m-d_His');
+        $filename = $prefix . '-' . $studentId . '-' . $lastName . '-' . $dateTime . '.' . $extension;
+        $destination = $directory . $filename;
+        
+        if (!move_uploaded_file($file['tmp_name'], $destination)) {
+            throw new Exception("Failed to upload file");
+        }
+        
+        return $destination;
+    }
+
     // Handle form submission and file upload
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        error_log("POST request received");
-        error_log("Session variables:");
-        error_log("Student_LastName: " . ($_SESSION['Student_LastName'] ?? 'not set'));
-        error_log("Student_FirstName: " . ($_SESSION['Student_FirstName'] ?? 'not set'));
-        error_log("Student_Birthdate: " . ($_SESSION['Student_Birthdate'] ?? 'not set'));
-        error_log("Father_LastName: " . ($_SESSION['Father_LastName'] ?? 'not set'));
-        error_log("Mother_LastName: " . ($_SESSION['Mother_LastName'] ?? 'not set'));
-        error_log("StudentID_Number: " . ($_SESSION['StudentID_Number'] ?? 'not set'));
+        try {
+            error_log("POST request received");
+            error_log("Session variables:");
+            error_log("Student_LastName: " . ($_SESSION['Student_LastName'] ?? 'not set'));
+            error_log("Student_FirstName: " . ($_SESSION['Student_FirstName'] ?? 'not set'));
+            error_log("Student_Birthdate: " . ($_SESSION['Student_Birthdate'] ?? 'not set'));
+            error_log("Father_LastName: " . ($_SESSION['Father_LastName'] ?? 'not set'));
+            error_log("Mother_LastName: " . ($_SESSION['Mother_LastName'] ?? 'not set'));
+            error_log("StudentID_Number: " . ($_SESSION['StudentID_Number'] ?? 'not set'));
 
-        $errors = [];
-        $sf9Verified = false;
-        $birthCertVerified = false;
-        $studentType = isset($_POST['student-type']) ? $_POST['student-type'] : '';
-        $gradeLevel = isset($_POST['grade-level']) ? $_POST['grade-level'] : '';
+            $errors = [];
+            $sf9Verified = false;
+            $birthCertVerified = false;
+            $studentType = isset($_POST['student-type']) ? $_POST['student-type'] : '';
+            $gradeLevel = isset($_POST['grade-level']) ? $_POST['grade-level'] : '';
 
-        // Process SF9 files
-        if (isset($_FILES['sf9_files'])) {
-            $sf9Details = []; // Initialize the array
-            $pageNumber = 1; // Use a counter instead of array key
+            // Process SF9 files
+            if (isset($_FILES['sf9_files'])) {
+                $sf9Details = []; // Initialize the array
+                $pageNumber = 1; // Use a counter instead of array key
 
-            foreach ($_FILES['sf9_files']['tmp_name'] as $tmpName) {
-                if (is_uploaded_file($tmpName)) {
-                    try {
-                        $response = extractTextFromImage($tmpName, $apiKey);
-                        $text = $response['responses'][0]['textAnnotations'][0]['description'] ?? '';
-                        $currentDetails = extractStudentDetails($text);
-                        
-                        // Debug logging
-                        error_log("Processing SF9 page {$pageNumber}");
-                        error_log("Extracted text: " . substr($text, 0, 500) . "..."); // Log first 500 chars
-                        error_log("Found details: " . print_r($currentDetails, true));
-                        
-                        // If this page has a general average, use it
-                        if (!empty($currentDetails['generalAverage'])) {
-                            $sf9Details['generalAverage'] = $currentDetails['generalAverage'];
-                            error_log("Found general average: {$currentDetails['generalAverage']}");
+                foreach ($_FILES['sf9_files']['tmp_name'] as $tmpName) {
+                    if (is_uploaded_file($tmpName)) {
+                        try {
+                            $response = extractTextFromImage($tmpName, $apiKey);
+                            $text = $response['responses'][0]['textAnnotations'][0]['description'] ?? '';
+                            $currentDetails = extractStudentDetails($text);
+                            
+                            // Debug logging
+                            error_log("Processing SF9 page {$pageNumber}");
+                            error_log("Extracted text: " . substr($text, 0, 500) . "..."); // Log first 500 chars
+                            error_log("Found details: " . print_r($currentDetails, true));
+                            
+                            // If this page has a general average, use it
+                            if (!empty($currentDetails['generalAverage'])) {
+                                $sf9Details['generalAverage'] = $currentDetails['generalAverage'];
+                                error_log("Found general average: {$currentDetails['generalAverage']}");
+                            }
+
+                            $pageNumber++;
+                            
+                        } catch (Exception $e) {
+                            $errors[] = "Error processing SF9 page {$pageNumber}: " . $e->getMessage();
+                            error_log("Error processing SF9 page {$pageNumber}: " . $e->getMessage());
                         }
-
-                        $pageNumber++;
-                        
-                    } catch (Exception $e) {
-                        $errors[] = "Error processing SF9 page {$pageNumber}: " . $e->getMessage();
-                        error_log("Error processing SF9 page {$pageNumber}: " . $e->getMessage());
                     }
+                }
+
+                // After processing all pages, verify if we found the general average
+                if (empty($sf9Details['generalAverage'])) {
+                    $errors[] = "Could not find general average in any of the uploaded SF9 pages";
+                    error_log("General average not found in any page");
+                } else {
+                    $sf9Verified = true;
+                    error_log("SF9 verification successful. General Average: " . $sf9Details['generalAverage']);
                 }
             }
 
-            // After processing all pages, verify if we found the general average
-            if (empty($sf9Details['generalAverage'])) {
-                $errors[] = "Could not find general average in any of the uploaded SF9 pages";
-                error_log("General average not found in any page");
-            } else {
-                $sf9Verified = true;
-                error_log("SF9 verification successful. General Average: " . $sf9Details['generalAverage']);
+            // Process Birth Certificate - simplified to just mark as verified
+            if (isset($_FILES['birth_certificate']) && is_uploaded_file($_FILES['birth_certificate']['tmp_name'])) {
+                $birthCertVerified = true;
             }
-        }
 
-        // Process Birth Certificate - simplified to just mark as verified
-        if (isset($_FILES['birth_certificate']) && is_uploaded_file($_FILES['birth_certificate']['tmp_name'])) {
-            $birthCertVerified = true;
-        }
-
-        // Handle verification results
-        if (!empty($errors)) {
-            $_SESSION['verification_errors'] = $errors;
-            header('Location: ../requirements.php?error=verification');
-            exit();
-        }
-
-        // If everything is verified, proceed with redirection
-        if ($sf9Verified && $birthCertVerified) {
-            error_log("Both documents verified successfully");
-            
-            // Debug the redirection conditions
-            error_log("Student Type: " . $studentType);
-            error_log("Grade Level: " . $gradeLevel);
-            error_log("General Average: " . ($sf9Details['generalAverage'] ?? 'not found'));
-            
-            // Redirect based on conditions
-            if ($studentType === "New Student" && $gradeLevel === "Grade 7" && 
-                !empty($sf9Details['generalAverage']) && $sf9Details['generalAverage'] >= 90) {
-                error_log("Redirecting to power_up.php");
-                header("Location: ../power_up.php");
-            } else {
-                error_log("Redirecting to rda.php");
-                header("Location: ../rda.php");
+            // Handle verification results
+            if (!empty($errors)) {
+                echo json_encode(['success' => false, 'error' => implode(', ', $errors)]);
+                exit();
             }
-            exit();
-        } else {
-            error_log("Verification failed. SF9: $sf9Verified, Birth Cert: $birthCertVerified");
-            $_SESSION['verification_errors'] = ["Document verification failed. Please check your uploads."];
-            header('Location: ../requirements.php?error=verification');
+
+            // If everything is verified, handle file uploads and database update
+            if ($sf9Verified && $birthCertVerified) {
+                // Database connection
+                require_once '../Database/database_conn.php';
+                
+                // Get StudentID_Number from session
+                $studentId = $_SESSION['StudentID_Number'] ?? null;
+                
+                if (!$studentId) {
+                    throw new Exception("Student ID not found in session");
+                }
+                
+                // Get student's last name
+                $lastName = getStudentLastName($conn, $studentId);
+                if (!$lastName) {
+                    throw new Exception("Student last name not found");
+                }
+                
+                // Define base directory and subdirectories
+                $baseDir = '../requirements/';
+                $directories = [
+                    'sf9' => $baseDir . 'SF9/',
+                    'birth' => $baseDir . 'BCertificate/',
+                    'recomputed' => $baseDir . 'CertRecomputed/'
+                ];
+                
+                // Create directories if they don't exist
+                foreach ($directories as $dir) {
+                    if (!file_exists($dir)) {
+                        if (!mkdir($dir, 0777, true)) {
+                            throw new Exception("Failed to create directory: " . $dir);
+                        }
+                    }
+                }
+                
+                // Handle SF9 files
+                $sf9Paths = [];
+                if (isset($_FILES['sf9_files'])) {
+                    foreach ($_FILES['sf9_files']['tmp_name'] as $key => $tmp_name) {
+                        if ($_FILES['sf9_files']['error'][$key] !== UPLOAD_ERR_OK) {
+                            throw new Exception("Error uploading SF9 file: " . $_FILES['sf9_files']['name'][$key]);
+                        }
+                        
+                        $fileData = [
+                            'name' => $_FILES['sf9_files']['name'][$key],
+                            'type' => $_FILES['sf9_files']['type'][$key],
+                            'tmp_name' => $tmp_name,
+                            'error' => $_FILES['sf9_files']['error'][$key],
+                            'size' => $_FILES['sf9_files']['size'][$key]
+                        ];
+                        $sf9Paths[] = handleFileUpload($fileData, $directories['sf9'], 'SF9', $studentId, $lastName);
+                    }
+                }
+                
+                // Handle Birth Certificate
+                $birthCertPath = null;
+                if (isset($_FILES['birth_certificate']) && $_FILES['birth_certificate']['tmp_name']) {
+                    if ($_FILES['birth_certificate']['error'] !== UPLOAD_ERR_OK) {
+                        throw new Exception("Error uploading Birth Certificate");
+                    }
+                    $birthCertPath = handleFileUpload(
+                        $_FILES['birth_certificate'], 
+                        $directories['birth'], 
+                        'BC', 
+                        $studentId, 
+                        $lastName
+                    );
+                }
+                
+                // Handle Recomputed Grades Certificate
+                $recomputedGradePath = null;
+                if (isset($_FILES['recomputed_grade_certificate']) && $_FILES['recomputed_grade_certificate']['tmp_name']) {
+                    if ($_FILES['recomputed_grade_certificate']['error'] !== UPLOAD_ERR_OK) {
+                        throw new Exception("Error uploading Recomputed Grade Certificate");
+                    }
+                    $recomputedGradePath = handleFileUpload(
+                        $_FILES['recomputed_grade_certificate'], 
+                        $directories['recomputed'], 
+                        'RG', 
+                        $studentId, 
+                        $lastName
+                    );
+                }
+
+                // Start transaction
+                $conn->begin_transaction();
+
+                try {
+                    // Check if record exists
+                    $checkQuery = "SELECT * FROM student_requirements WHERE StudentID_Number = ?";
+                    $checkStmt = $conn->prepare($checkQuery);
+                    $checkStmt->bind_param('s', $studentId);
+                    $checkStmt->execute();
+                    $result = $checkStmt->get_result();
+
+                    if ($result->num_rows > 0) {
+                        // Update existing record
+                        $query = "UPDATE student_requirements 
+                                 SET SF9_ReportCard = ?, 
+                                     B_Certificate = ?, 
+                                     Con_Admission = ? 
+                                 WHERE StudentID_Number = ?";
+                    } else {
+                        // Insert new record
+                        $query = "INSERT INTO student_requirements 
+                                 (StudentID_Number, SF9_ReportCard, B_Certificate, Con_Admission) 
+                                 VALUES (?, ?, ?, ?)";
+                    }
+
+                    $stmt = $conn->prepare($query);
+                    
+                    // Convert SF9 paths array to comma-separated string
+                    $sf9PathString = !empty($sf9Paths) ? implode(',', $sf9Paths) : null;
+                    
+                    $stmt->bind_param(
+                        'ssss',
+                        $studentId,
+                        $sf9PathString,
+                        $birthCertPath,
+                        $recomputedGradePath
+                    );
+                    
+                    if (!$stmt->execute()) {
+                        throw new Exception("Database error: " . $stmt->error);
+                    }
+
+                    // Commit transaction
+                    $conn->commit();
+
+                    // Return success response
+                    echo json_encode([
+                        'success' => true, 
+                        'generalAverage' => $sf9Details['generalAverage'] ?? null,
+                        'redirect' => ($studentType === "New Student" && $gradeLevel === "Grade 7" && !empty($sf9Details['generalAverage']) && $sf9Details['generalAverage'] >= 90) ? 'power_up.php' : 'rda.php'
+                    ]);
+                    exit();
+
+                } catch (Exception $e) {
+                    // Rollback transaction on error
+                    $conn->rollback();
+                    throw $e;
+                }
+            }
+        } catch (Exception $e) {
+            error_log("Error in file upload process: " . $e->getMessage());
+            echo json_encode([
+                'success' => false, 
+                'error' => "An error occurred while processing your request: " . $e->getMessage()
+            ]);
             exit();
         }
-
-        // Add this to check file uploads
-        error_log("Files received:");
-        error_log("SF9 files: " . print_r($_FILES['sf9_files'] ?? 'not set', true));
-        error_log("Birth certificate: " . print_r($_FILES['birth_certificate'] ?? 'not set', true));
     }
 ?>
