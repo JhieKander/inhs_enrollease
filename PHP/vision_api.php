@@ -2,7 +2,7 @@
     session_start();
 
     // Google Vision API key
-    $apiKey = 'AIzaSyBSGAzrwz-kTKj27YLfgnXZzMQtIRgir4E';
+    $apiKey = '';
 
     // Function to extract student details from text
     function extractStudentDetails($text) {
