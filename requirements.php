@@ -1,6 +1,14 @@
 <?php
     include 'header.php';
     include 'PHP/vision_api.php';
+    if (isset($_SESSION['verification_errors'])) {
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                showVerificationError(" . json_encode($_SESSION['verification_errors']) . ");
+            });
+        </script>";
+        unset($_SESSION['verification_errors']); // Clear the errors after displaying
+    }
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +23,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="CSS/normalize.css">
     <link rel="stylesheet" href="CSS/requirement.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        // Set worker path for PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
 </head>
 <body>
     <main>
@@ -65,9 +78,10 @@
                                     <div class="upload-box">
                                         <i class="fas fa-folder-open"></i>
                                         <p>SF9 (Learners' Progress Report Card)</p>
-                                        <p>Front and Back Image</p>
+                                        <p>Please upload both Front Page and Back Page</p>
                                         <button type="button" onclick="document.getElementById('sf9-input').click()">Choose Files</button>
-                                        <input type="file" id="sf9-input" name="sf9_files[]" multiple style="display: none;">
+                                        <input type="file" id="sf9-input" name="sf9_files[]" multiple accept="image/*,.pdf" style="display: none;">
+                                        <div class="selected-file"></div>
                                     </div>
                                     <div class="upload-box">
                                         <i class="fas fa-folder-open"></i>
@@ -77,6 +91,7 @@
                                         <div>
                                             <button type="button" onclick="document.getElementById('file-input-1').click()">Choose Files</button>
                                             <input type="file" id="file-input-1" name="birth_certificate" style="display: none;">
+                                            <div class="selected-file"></div>
                                         </div>
                                     </div>
                                     <div class="upload-box">
@@ -85,6 +100,7 @@
                                         <div>
                                             <button type="button" onclick="document.getElementById('file-input-2').click()">Choose Files</button>
                                             <input type="file" id="file-input-2" name="recomputed_grade_certificate" style="display: none;">
+                                            <div class="selected-file"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -102,6 +118,20 @@
                                 <button id="modalOkButton">OK</button>
                             </div>
                         </div>
+                        
+                        <div id="previewModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close-button">&times;</span>
+                                <h2>File Preview</h2>
+                                <div id="previewContent">
+                                    <img id="previewImage" alt="Preview">
+                                    <iframe id="previewPdf"></iframe>
+                                </div>
+                                <div class="preview-button-container">
+                                    <button class="preview-close-btn">Close</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -109,6 +139,46 @@
     </main>
 <script src="JavaScript/grade_level.js"></script>
 <script src="JavaScript/file.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        <?php
+        if (isset($_SESSION['verification_errors'])) {
+            echo "showVerificationError(" . json_encode($_SESSION['verification_errors']) . ");";
+            unset($_SESSION['verification_errors']);
+        }
+        ?>
+    });
+</script>
+<div id="verificationErrorModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" onclick="closeVerificationModal()">&times;</span>
+        <div class="modal-header">
+            <h2>Document Verification Failed</h2>
+        </div>
+        <div class="modal-body">
+            <div class="error-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <div class="error-message">
+                <h3>The following information does not match our records:</h3>
+                <ul id="verificationErrorList">
+                    <!-- Errors will be inserted here dynamically -->
+                </ul>
+            </div>
+            <div class="document-instructions">
+                <p>Please ensure:</p>
+                <ul>
+                    <li>You have uploaded the correct documents</li>
+                    <li>The documents are clear and readable</li>
+                    <li>The information matches what you provided in your application</li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeVerificationModal()" class="btn-close-modal">Close</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
 

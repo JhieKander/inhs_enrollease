@@ -5,12 +5,6 @@
 
     // Check if the form was submitted to save the data temporarily
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['save_form'])) {
-        // Validate the form data
-        if (!validateEnrollmentForm($_POST)) {
-            // If validation fails, the modal will be shown via the function
-            return; // Exit if validation fails
-        }
-
         // Store form data in session variables for each field
         $_SESSION['user_data'] = $_POST; 
     }
@@ -474,8 +468,7 @@
                                         </div>
                                         <div class="field-group">
                                             <label for="mother-contact-number">Contact Number<span style="color: red;">*</span></label>
-                                            <input type="text" ```php
-                                            id="mother-contact-number" name="mother-contact-number" placeholder="09XXXXXXXXX" maxlength="11" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo htmlspecialchars($motherContactNumber); ?>">
+                                            <input type="text" id="mother-contact-number" name="mother-contact-number" placeholder="09XXXXXXXXX" maxlength="11" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo htmlspecialchars($motherContactNumber); ?>">
                                         </div>
                                     </div>
                                 </div>

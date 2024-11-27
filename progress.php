@@ -17,7 +17,7 @@
         </div>
     </a>
     <div class="arrow">></div>
-    <div class="step">
+    <div class="step" id="step3">
         <div class="step-number inactive">3</div>
         <div class="step-text inactive">
             <div>Take the Reading</div>
@@ -48,7 +48,14 @@
         const steps = {
             'application.php': 'step1',
             'requirements.php': 'step2',
-            'power_up.php': 'step2', // Make step 2 active for power_up.php as well
+            'power_up.php': 'step2',
+            'rda.php': 'step3',
+            'english_videoprompt.php': 'step3',
+            'english_passage.php': 'step3',
+            'english_comprehend.php': 'step3',
+            'filipino_videoprompt.php': 'step3',
+            'filipino_passage.php': 'step3',
+            'filipino_comprehend.php': 'step3', // Make step 2 active for power_up.php as well
             'id_upload.php': 'step4',
             'submit_reqs.php': 'step5'
         };
