@@ -226,7 +226,7 @@
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="place-of-birth">Place of Birth <span class="opt">(Municipality/City)</span><span style="color: red;">*</span></label>
-                                        <select id="place-of-birth" name="place-of-birth" class="long-input">
+                                        <select id="place-of-birth" name="place-of-birth" class="long-input" value="<?php echo htmlspecialchars($studentPlaceOfBirth); ?>">
                                             <option value=""></option>
                                         </select>
                                     </div>

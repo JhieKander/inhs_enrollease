@@ -54,7 +54,7 @@
                                         <div id="video-container">
                                             <video id="video" autoplay muted></video>
                                             <button id="startRecording">START RECORDING</button>
-                                            <button id="stopRecording">STOP RECORDING</button>
+                                            <button id="stopRecording" style="display: none;">STOP RECORDING</button> <!-- Initially hidden -->
                                         </div>
 
                                         <div id="transcriptionResult"></div>

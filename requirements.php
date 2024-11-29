@@ -77,8 +77,14 @@
                                 <div class="upload-section">
                                     <div class="upload-box">
                                         <i class="fas fa-folder-open"></i>
-                                        <p>SF9 (Learners' Progress Report Card)</p>
-                                        <p>Please upload both Front Page and Back Page</p>
+                                        <p>SF9 (Learners' Progress Report Card) - Front Page -</p>
+                                        <button type="button" onclick="document.getElementById('sf9-front-input').click()">Choose Files</button>
+                                        <input type="file" id="sf9-front-input" name="sf9_front_page" style="display: none;">
+                                        <div class="selected-file"></div>
+                                    </div>
+                                    <div class="upload-box">
+                                        <i class="fas fa-folder-open"></i>
+                                        <p>SF9 (Learners' Progress Report Card) - Back Page -</p>
                                         <button type="button" onclick="document.getElementById('sf9-input').click()">Choose Files</button>
                                         <input type="file" id="sf9-input" name="sf9_files[]" multiple accept="image/*,.pdf" style="display: none;">
                                         <div class="selected-file"></div>
@@ -96,7 +102,7 @@
                                     </div>
                                     <div class="upload-box">
                                         <i class="fas fa-folder-open"></i>
-                                        <p>For Conditionally Promoted Students: Certificate of Recomputed Grade/s</p>
+                                        <p>For Conditionally Promoted Students: Certificate of Recomputed Grade/s <span style="font-style: italic;">(Optional)</span></p>
                                         <div>
                                             <button type="button" onclick="document.getElementById('file-input-2').click()">Choose Files</button>
                                             <input type="file" id="file-input-2" name="recomputed_grade_certificate" style="display: none;">

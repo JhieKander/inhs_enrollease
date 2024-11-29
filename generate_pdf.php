@@ -72,6 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $last_school_year = $_POST['last-school-year'];
     $last_school = $_POST['last-school'];
     $school_id = $_POST['school-id'];
+    $student_type = $_POST['studentType'];
     $studentID = isset($_POST['studentID']) ? $_POST['studentID'] : 'Not specified';
     $grade_level = isset($_POST['gradeLevel']) ? $_POST['gradeLevel'] : 'Not specified';
     $grade_input = preg_replace('/[^0-9]/', '', $grade_level); // Extract the numeric part

@@ -2,7 +2,7 @@
     session_start();
 
     // Google Vision API key
-    $apiKey = '';
+    $apiKey = 'AIzaSyBSGAzrwz-kTKj27YLfgnXZzMQtIRgir4E';
 
     // Function to extract student details from text
     function extractStudentDetails($text) {
@@ -278,6 +278,8 @@
                 $baseDir = '../requirements/';
                 $directories = [
                     'sf9' => $baseDir . 'SF9/',
+                    'sf9_front' => $baseDir . 'SF9/SF9_Front/', // New directory for front page
+                    'sf9_back' => $baseDir . 'SF9/SF9_Back/',
                     'birth' => $baseDir . 'BCertificate/',
                     'recomputed' => $baseDir . 'CertRecomputed/'
                 ];
@@ -291,8 +293,16 @@
                     }
                 }
                 
-                // Handle SF9 files
-                $sf9Paths = [];
+                if (isset($_FILES['sf9_front_page'])) {
+                    // Handle the front page file upload
+                    $frontPageData = $_FILES['sf9_front_page'];
+                    if ($frontPageData['error'] !== UPLOAD_ERR_OK) {
+                        throw new Exception("Error uploading SF9 front page: " . $frontPageData['name']);
+                    }
+                    $sf9FrontPagePath = handleFileUpload($frontPageData, $directories['sf9_front'], 'SF9_ReportCardFront', $studentId, $lastName); // Save as SF9_ReportCardFront
+                }
+
+                // Handle SF9 files (back page)
                 if (isset($_FILES['sf9_files'])) {
                     foreach ($_FILES['sf9_files']['tmp_name'] as $key => $tmp_name) {
                         if ($_FILES['sf9_files']['error'][$key] !== UPLOAD_ERR_OK) {
@@ -306,7 +316,8 @@
                             'error' => $_FILES['sf9_files']['error'][$key],
                             'size' => $_FILES['sf9_files']['size'][$key]
                         ];
-                        $sf9Paths[] = handleFileUpload($fileData, $directories['sf9'], 'SF9', $studentId, $lastName);
+                        // Save each file in sf9_files as SF9_ReportCardBack
+                        $sf9BackPagePath = handleFileUpload($fileData, $directories['sf9_back'], 'SF9_ReportCardBack', $studentId, $lastName); // Save as SF9_ReportCardBack
                     }
                 }
                 
@@ -354,30 +365,36 @@
                     if ($result->num_rows > 0) {
                         // Update existing record
                         $query = "UPDATE student_requirements 
-                                 SET SF9_ReportCard = ?, 
+                                 SET SF9_ReportCardFront = ?,
+                                     SF9_ReportCardBack = ?, 
                                      B_Certificate = ?, 
                                      Con_Admission = ? 
                                  WHERE StudentID_Number = ?";
+                        $stmt = $conn->prepare($query);
+                        $stmt->bind_param(
+                            'ssssi',
+                            $sf9FrontPagePath,
+                            $sf9BackPagePath,
+                            $birthCertPath,
+                            $recomputedGradePath,
+                            $studentId
+                        );
                     } else {
                         // Insert new record
                         $query = "INSERT INTO student_requirements 
-                                 (StudentID_Number, SF9_ReportCard, B_Certificate, Con_Admission) 
-                                 VALUES (?, ?, ?, ?)";
+                                 (StudentID_Number, SF9_ReportCardFront, SF9_ReportCardBack, B_Certificate, Con_Admission) 
+                                 VALUES (?, ?, ?, ?, ?)";
+                        $stmt = $conn->prepare($query);
+                        $stmt->bind_param(
+                            'issss',
+                            $studentId,
+                            $sf9FrontPagePath,
+                            $sf9BackPagePath,
+                            $birthCertPath,
+                            $recomputedGradePath // Include SF9 Front Page path
+                        );
                     }
 
-                    $stmt = $conn->prepare($query);
-                    
-                    // Convert SF9 paths array to comma-separated string
-                    $sf9PathString = !empty($sf9Paths) ? implode(',', $sf9Paths) : null;
-                    
-                    $stmt->bind_param(
-                        'ssss',
-                        $studentId,
-                        $sf9PathString,
-                        $birthCertPath,
-                        $recomputedGradePath
-                    );
-                    
                     if (!$stmt->execute()) {
                         throw new Exception("Database error: " . $stmt->error);
                     }

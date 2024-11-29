@@ -139,7 +139,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="emergency-contact">Emergency Contact No.<span style="color: red;">*</span></label>
-                                <input type="text" id="emergency-contact" name="emergency_contact_number" value="<?php echo htmlspecialchars($emergencyContactNumber); ?>" <?php echo $emergencyContactNumberDisabled ? 'disabled' : ''; ?>>
+                                <input type="text" id="emergency-contact" name="emergency_contact_number" placeholder="09XXXXXXXXX" maxlength="11" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo htmlspecialchars($emergencyContactNumber); ?>" <?php echo $emergencyContactNumberDisabled ? 'disabled' : ''; ?>>
                             </div>
                         </div>
                         <h2>Account</h2>

@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-include 'Database/database_conn.php';
+include '../Database/database_conn.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     set_time_limit(60);

@@ -28,7 +28,7 @@ document.getElementById('startRecording').onclick = async () => {
         formData.append('video', videoFile);
         
         // Send video file to server for processing
-        const response = await fetch('PHP/video.php', {
+        const response = await fetch('PHP/upload_video.php', {
             method: 'POST',
             body: formData
         });
@@ -69,14 +69,24 @@ document.getElementById('startRecording').onclick = async () => {
     document.getElementById('startRecording').style.display = 'none';
 };
 
-document.getElementById('stopRecording').onclick = () => {
-    mediaRecorder.stop();
-    videoStream.getTracks().forEach(track => track.stop()); // Stop all video and audio tracks
-    
-    // Hide Stop Recording button and show Start Recording button
-    document.getElementById('stopRecording').style.display = 'none';
-    document.getElementById('startRecording').style.display = 'block';
-};
+document.getElementById('stopRecording').addEventListener('click', () => {
+    if (mediaRecorder) {
+        console.log("Stop button clicked. MediaRecorder state:", mediaRecorder.state); // Log the state of mediaRecorder
+        if (mediaRecorder.state === "recording") {
+            mediaRecorder.stop(); // Stop the recording
+            videoStream.getTracks().forEach(track => track.stop()); // Stop all video and audio tracks
+            
+            // Hide the stop button and show the start button
+            document.getElementById('stopRecording').style.display = 'none'; // Hide stop button
+            document.getElementById('startRecording').style.display = 'inline'; // Show start button
+            console.log("Recording stopped."); // Debugging statement
+        } else {
+            console.warn("MediaRecorder is not in the recording state."); // Log warning if not recording
+        }
+    } else {
+        console.warn("MediaRecorder is not initialized."); // Log warning if not initialized
+    }
+});
 
 // Function to calculate the video's length in seconds
 function getVideoDurationInSeconds() {
@@ -96,7 +106,7 @@ function uploadVideo() {
     formData.append('video', videoFile);
     formData.append('duration', videoDuration); // Append duration
 
-    fetch('PHP/video.php', {
+    fetch('PHP/upload_video.php', {
         method: 'POST',
         body: formData
     })

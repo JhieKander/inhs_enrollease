@@ -78,6 +78,7 @@ document.getElementById('studentForm').addEventListener('submit', function(event
 document.getElementById('closeModal').onclick = function() {
     const modal = document.getElementById('modal');
     modal.style.display = 'none'; // Hide the modal
+    location.reload(); // Refresh the page
 }
 
 // Close the modal when the user clicks anywhere outside of the modal
@@ -85,6 +86,7 @@ window.onclick = function(event) {
     const modal = document.getElementById('modal');
     if (event.target === modal) {
         modal.style.display = 'none'; // Hide the modal
+        location.reload(); // Refresh the page
     }
 }
 
