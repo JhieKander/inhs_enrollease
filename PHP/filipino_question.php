@@ -41,27 +41,43 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $correctAnswersCount = (int)$_POST['correct_answers_count']; // Assuming you send this from the JS code
+        $correctAnswersCount = (int)$_POST['correct_answers_count']; // Get the count of correct answers
 
-        // Store this count in session for further processing
-        $_SESSION['correct_answers'] = $correctAnswersCount;
+        // Initialize the rating variable
+        $rating = "Not Rated"; // Default value if no conditions are met
 
         // Determine the rating based on the correct answers count
         if ($correctAnswersCount >= 8) {
             $rating = "Malaya";
         } elseif ($correctAnswersCount >= 5) {
-            $rating = "Instruksyuna;";
+            $rating = "Instrukyunal";
         } elseif ($correctAnswersCount >= 3) {
             $rating = "Kabiguan";
-        } else {
+        } elseif ($correctAnswersCount >= 0) {
             $rating = "Walang Kahandaan";
         }
 
-        // Store the rating in session
-        $_SESSION['rating'] = $rating;
+        // Debugging: Check the rating value
+        error_log("Rating determined: " . $rating); // Log the rating for debugging
 
-        // Redirect to Filipino Assessment
-        header('Location: ../id_upload.php');
-        exit();
+        // Save the score and rating to the database
+        $studentID = $_SESSION['StudentID_Number'];
+        $stmt = $conn->prepare("UPDATE readingskills_result SET Filipino_ComprehensionScore = ?, Filipino_ComprehensionRating = ? WHERE StudentID_Number = ?");
+        $stmt->bind_param("isi", $correctAnswersCount, $rating, $studentID);
+
+        // Debugging: Check if the statement was prepared successfully
+        if (!$stmt) {
+            error_log("Prepare failed: (" . $conn->errno . ") " . $conn->error);
+        }
+
+        if ($stmt->execute()) {
+            // Redirect to the next assessment or page
+            header('Location: ../rda.php');
+            exit();
+        } else {
+            echo "Error updating record: " . $stmt->error;
+        }
+
+        $stmt->close();
     }
 ?>

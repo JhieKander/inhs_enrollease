@@ -46,15 +46,48 @@
                                     <div class="assessment-card">
                                         <i class="fas fa-video icon"></i>
                                         <h2>English Assessment</h2>
-                                        <button class="start-english" id="record-button">Start Recording</button>
+                                        <?php
+                                            // Check if English_Video exists for current student
+                                            $checkEnglishVideo = $conn->prepare("SELECT English_Video FROM readingskills_result WHERE StudentID_Number = ?");
+                                            $checkEnglishVideo->bind_param("i", $_SESSION['StudentID_Number']);
+                                            $checkEnglishVideo->execute();
+                                            $resultEnglishVideo = $checkEnglishVideo->get_result();
+                                            $rowEnglishVideo = $resultEnglishVideo->fetch_assoc();
+
+                                            // Enable button if video exists
+                                            $disabled = !empty($rowEnglishVideo['English_Video']) ? 'disabled' : '';
+                                        ?>
+                                        <button class="start-english" id="record-button" <?php echo $disabled; ?> onclick="window.location.href='english_videoprompt.php'">Start Recording</button>
                                     </div>
                                     <div class="assessment-card">
                                         <i class="fas fa-video icon"></i>
                                         <h2>Filipino Assessment</h2>
-                                        <button class="start-filipino">Start Recording</button>
+                                        <?php
+                                            // Check if Filipino_Video exists for current student
+                                            $checkFilipinoVideo = $conn->prepare("SELECT Filipino_Video FROM readingskills_result WHERE StudentID_Number = ?");
+                                            $checkFilipinoVideo->bind_param("i", $_SESSION['StudentID_Number']);
+                                            $checkFilipinoVideo->execute();
+                                            $resultFilipinoVideo = $checkFilipinoVideo->get_result();
+                                            $rowFilipinoVideo = $resultFilipinoVideo->fetch_assoc();
+
+                                            // Enable button if video exists
+                                            $disabled = !empty($rowFilipinoVideo['Filipino_Video']) ? 'disabled' : '';
+                                        ?>
+                                        <button class="start-filipino" <?php echo $disabled; ?> onclick="window.location.href='filipino_videoprompt.php'">Start Recording</button>
                                     </div>
                                 </div>
-                                <button class="proceed-button">Proceed</button>
+                                <?php
+                                    // Check if English_Video exists for current student
+                                    $checkVideo = $conn->prepare("SELECT English_Video, Filipino_Video FROM readingskills_result WHERE StudentID_Number = ?");
+                                    $checkVideo->bind_param("i", $_SESSION['StudentID_Number']);
+                                    $checkVideo->execute();
+                                    $result = $checkVideo->get_result();
+                                    $row = $result->fetch_assoc();
+                                    
+                                    // Enable button if video exists
+                                    $disabled = empty($row['English_Video']) && empty($row['Filipino_Video']) ? 'disabled' : '';
+                                ?>
+                                <button class="proceed-button" <?php echo $disabled; ?> onclick="window.location.href='id_upload.php'">Proceed</button>
                             </div>
                         </div>
                     </div>
@@ -62,9 +95,6 @@
             </section>
         </div>
     </main>
-
-    <script src="JavaScript/read.js"></script>
-    <script src="JavaScript/check-read.js"></script>
 </body>
 </html>
 

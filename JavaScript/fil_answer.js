@@ -1,3 +1,26 @@
+// Initially disable the Proceed button
+const proceedButton = document.querySelector('.proceed-button');
+proceedButton.disabled = true;
+
+// Add event listeners to all radio buttons
+document.querySelectorAll('input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+        // Count how many answers have been selected
+        const questions = document.querySelectorAll('.question');
+        let selectedCount = 0;
+
+        questions.forEach(question => {
+            const userAnswer = question.querySelector('input[type="radio"]:checked');
+            if (userAnswer) {
+                selectedCount++;
+            }
+        });
+
+        // Enable the Proceed button only if exactly 10 answers are selected
+        proceedButton.disabled = selectedCount !== 10; // Enable if selectedCount is exactly 10
+    });
+});
+
 document.querySelector('.proceed-button').addEventListener('click', function() {
     let correctAnswers = 0;
     const questions = document.querySelectorAll('.question');
@@ -15,31 +38,24 @@ document.querySelector('.proceed-button').addEventListener('click', function() {
         }
     });
 
-    // Show the number of correct answers in an alert
-    alert('Number of correct answers: ' + correctAnswers);
-
     // Determine the rating based on the correct answers count
     let rating;
     if (correctAnswers >= 8) {
         rating = "Malaya";
     } else if (correctAnswers >= 5) {
-        rating = "Instruksyunal";
+        rating = "Instrukyunal";
     } else if (correctAnswers >= 3) {
         rating = "Kabiguan";
-    } else {
+    } else if (correctAnswers >= 0) {
         rating = "Walang Kahandaan";
     }
 
-    // Show the rating in an alert
-    alert('Your rating: ' + rating);
-
-    // You can send this count to the server if needed
-    // For example, using fetch or a form submission
-    // Here is an example of how you might send the data:
+    // Prepare the data to send to the server
     const formData = new FormData();
     formData.append('correct_answers_count', correctAnswers);
 
-    fetch('your-server-endpoint.php', {
+    // Send the data to the server
+    fetch('filipino_comprehend.php', {
         method: 'POST',
         body: formData
     })

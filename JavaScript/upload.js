@@ -2,12 +2,57 @@ document.getElementById('browseLink').addEventListener('click', function() {
     document.getElementById('fileInput').click();
 });
 
-const uploadArea = document.getElementById('uploadArea');
-const fileInput = document.getElementById('fileInput');
-const fileName = document.getElementById('fileName');
-const fileSize = document.getElementById('fileSize');
-const uploadIcon = document.getElementById('uploadIcon');
-const uploadText = document.getElementById('uploadText');
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+    const fileInput = document.getElementById("fileInput");
+    const uploadArea = document.getElementById("uploadArea");
+
+    // Ensure modals exist before using them
+    const successModal = document.getElementById('successModal');
+    const invalidImageModal = document.getElementById('invalidImageModal');
+
+    // Function to handle file upload
+    function handleFileUpload(event) {
+        const files = fileInput.files;
+        if (files.length === 0) {
+            event.preventDefault(); // Prevent form submission
+            const uploadErrorModal = document.getElementById('uploadErrorModal');
+            if (uploadErrorModal) {
+                uploadErrorModal.style.display = 'block'; // Show error modal
+            }
+            return false;
+        }
+        
+        // Continue with the upload process
+        // Prevent default submission to handle the response from the server
+        event.preventDefault(); // Prevent form submission
+        const formData = new FormData(form);
+        
+        // Use fetch to submit the form data
+        fetch('PHP/upload_picture.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showSuccessModal(); // Show success modal
+            } else {
+                showInvalidImageModal(); // Show invalid image modal
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+        return false; // Prevent form submission
+    }
+
+    // Attach the handleFileUpload function to form submit event
+    if (form) {
+        form.addEventListener('submit', handleFileUpload);
+    }
+});
 
 uploadArea.addEventListener('dragover', (event) => {
     event.preventDefault();

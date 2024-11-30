@@ -5,7 +5,7 @@ $response = array(); // Initialize response array
 
 // Check if the video file is uploaded
 if (isset($_FILES["video"]) && $_FILES["video"]["error"] == UPLOAD_ERR_OK) {
-    $targetDir = "../upload_videos/English/";
+    $targetDir = "../upload_videos/Filipino/";
     
     // Check if the directory exists, if not, create it
     if (!is_dir($targetDir)) {

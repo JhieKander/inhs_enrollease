@@ -60,7 +60,7 @@ document.getElementById('startRecording').onclick = async () => {
         formData.append('video', videoFile);
         
         // Send video file to server for processing
-        const response = await fetch('PHP/upload_video.php', {
+        const response = await fetch('PHP/video_upload.php', {
             method: 'POST',
             body: formData
         });
@@ -69,8 +69,8 @@ document.getElementById('startRecording').onclick = async () => {
         console.log("Video Processing Response:", textResponse);  // Log the raw response
 
         try {
-            const videoLocation = `upload_videos/English/${videoFileName}`; // Construct the video location
-            const saveLocationResponse = await fetch('PHP/save_video_location.php', {
+            const videoLocation = `upload_videos/Filipino/${videoFileName}`; // Construct the video location
+            const saveLocationResponse = await fetch('PHP/video_save_location.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -41,10 +41,10 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $correctAnswersCount = (int)$_POST['correct_answers_count']; // Assuming you send this from the JS code
+        $correctAnswersCount = (int)$_POST['correct_answers_count']; // Get the count of correct answers
 
-        // Store this count in session for further processing
-        $_SESSION['correct_answers'] = $correctAnswersCount;
+        // Initialize the rating variable
+        $rating = "Not Rated"; // Default value if no conditions are met
 
         // Determine the rating based on the correct answers count
         if ($correctAnswersCount >= 8) {
@@ -53,15 +53,23 @@
             $rating = "Instructional";
         } elseif ($correctAnswersCount >= 3) {
             $rating = "Failure";
-        } else {
+        } elseif ($correctAnswersCount >= 0) {
             $rating = "Unprepared";
         }
 
-        // Store the rating in session
-        $_SESSION['rating'] = $rating;
+        // Save the score and rating to the database
+        $studentID = $_SESSION['StudentID_Number'];
+        $stmt = $conn->prepare("UPDATE readingskills_result SET English_ComprehensionScore = ?, English_ComprehensionRating = ? WHERE StudentID_Number = ?");
+        $stmt->bind_param("isi", $correctAnswersCount, $rating, $studentID);
 
-        // Redirect to Filipino Assessment
-        header('Location: ../filipino_videoprompt.php');
-        exit();
+        if ($stmt->execute()) {
+            // Redirect to the next assessment or page
+            header('Location: ../rda.php');
+            exit();
+        } else {
+            echo "Error updating record: " . $stmt->error;
+        }
+
+        $stmt->close();
     }
 ?>
