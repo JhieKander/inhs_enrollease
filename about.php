@@ -46,6 +46,7 @@
         </div>
     </div>
  </body>
+ <script src="JavaScript/sessionTimeout.js"></script>
 </html>
 
 <?php

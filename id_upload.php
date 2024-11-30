@@ -40,28 +40,59 @@
                         <?php include 'progress.php'; ?>
 
                         <h3>Attach your ID Picture</h3>
-                        <h4>Upload you 1X1 ID Picture with white background and by wearing an appropriate attire.</h4>
+                        <h4>Upload you 1X1 ID Picture with <span style="font-weight: bold;">white background</span> and by wearing an <span style="font-weight: bold;">appropriate attire</span>.</h4>
 
-                        <div class="upload-container">
-                            <div class="upload-area" id="uploadArea">
-                                <i class="fas fa-image" id="uploadIcon"></i>
-                                <p id="uploadText">Drag image here.<br>or</p>
-                                <a id="browseLink"><i class="fas fa-folder-open"></i>Browse image</a>
-                                <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                        <form method="POST" enctype="multipart/form-data">
+                            <div class="upload-container">
+                                <div class="upload-area" id="uploadArea">
+                                    <i class="fas fa-image" id="uploadIcon"></i>
+                                    <p id="uploadText">Drag image here.<br>or</p>
+                                    <a id="browseLink"><i class="fas fa-folder-open"></i>Browse image</a>
+                                    <input type="file" id="fileInput" name="fileInput" accept="image/*" style="display: none;">
+                                </div>
+                                <div class="upload-details">
+                                    <p class="file-name" id="fileName">attachment.file</p>
+                                    <p class="file-size" id="fileSize">0 MB</p>
+                                    <div class="thin-line"></div>
+                                    <button type="submit" class="upload-button">Upload</button>
+                                </div>
                             </div>
-                            <div class="upload-details">
-                                <p class="file-name" id="fileName">attachment.file</p>
-                                <p class="file-size" id="fileSize">0 MB</p>
-                                <div class="thin-line"></div>
-                                <button class="upload-button">Upload</button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </section>
         </div>
+        
+        <!-- Success Modal -->
+        <div class='modal' id='successModal' style='display:none;'>
+            <div class='modal-content'>
+                <h2>Success!</h2>
+                <p>ID Picture uploaded successfully!</p>
+                <button>OK</button>
+            </div>
+        </div>
+
+        <!-- Invalid Image Modal -->
+        <div class='modal' id='invalidImageModal' style='display:none;'>
+            <div class='modal-content'>
+                <h2>Invalid Image</h2>
+                <p>The image uploaded cannot be used for your ID Picture.</p>
+                <button onclick='closeInvalidImageModal()'>OK</button>
+            </div>
+        </div>
+
+        <!-- Upload Error Modal -->
+        <div class='modal' id='uploadErrorModal' style='display:none;'>
+            <div class='modal-content'>
+                <h2>Warning</h2>
+                <p>No file selected. Please upload an image.</p>
+                <button onclick='closeUploadErrorModal()'>OK</button>
+            </div>
+        </div>
     </main>
-    <script src="JavaScript/upload.js"></script>
+    <script src="JavaScript/upload_modal.js" defer></script>
+    <script src="JavaScript/upload.js" defer></script>
+    <script src="JavaScript/sessionTimeout.js"></script>
 </body>
 </html>
 

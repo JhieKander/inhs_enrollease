@@ -178,6 +178,7 @@
         </div>
     </main>
     <script src=" JavaScript/update_profile.js"></script>
+    <script src="JavaScript/sessionTimeout.js"></script>
 </body>
 </html>
 

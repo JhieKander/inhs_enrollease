@@ -68,6 +68,7 @@
     </main>
 </body>
     <script src="JavaScript/powerup.js"></script>
+    <script src="JavaScript/sessionTimeout.js"></script>
 </html>
 
 <?php

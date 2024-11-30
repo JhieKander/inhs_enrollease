@@ -185,6 +185,7 @@
         </div>
     </div>
 </div>
+<script src="JavaScript/sessionTimeout.js"></script>
 </body>
 </html>
 

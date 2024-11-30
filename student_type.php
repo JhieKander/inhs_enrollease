@@ -102,6 +102,7 @@
     </main>
 </body>
     <script src="JavaScript/type.js"></script>
+    <script src="JavaScript/sessionTimeout.js"></script>
 </html>
 
 <?php

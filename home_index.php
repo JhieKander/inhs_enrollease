@@ -170,6 +170,7 @@
         </section>
     </body>
         <script src="JavaScript/orgs.js" defer></script>
+        <script src="JavaScript/sessionTimeout.js"></script>
 </html>
 
 <?php

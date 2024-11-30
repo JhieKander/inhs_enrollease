@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-
+    
     <link rel="stylesheet" href="CSS/normalize.css">
     <link rel="stylesheet" href="CSS/comprehend.css">
 </head>
@@ -30,9 +30,7 @@
                 </div>
             </section>
             <section class="form">
-                <?php
-                    include 'sidebar.php';
-                ?>
+                <?php include 'sidebar.php'; ?>
                 <div class="content">
                     <h1>Application</h1>
                     <hr>
@@ -45,7 +43,7 @@
 
                         <div class="tain">
                             <?php include 'PHP/filipino_question.php'; ?>
-                            <button class="proceed-button">Proceed to the Next Step</button>
+                            <button class="proceed-button" disabled onclick="window.location.href='rda.php'">Proceed</button>
                         </div>
                     </div>
                 </div>
@@ -54,6 +52,7 @@
     </main>
 </body>
 <script src="JavaScript/fil_answer.js"></script>
+<script src="JavaScript/sessionTimeout.js"></script>
 </html>
 
 <?php

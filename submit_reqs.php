@@ -65,13 +65,14 @@
 
                         <p class="italic">
                             "If you already submitted the requirements and upon checking by the admission officer, this page will 
-                            automatically changed once the requirements checked out."
+                            automatically changed once you are enrolled."
                         </p>
                     </div>
                 </div>
             </section>
         </div>
     </main>
+    <script src="JavaScript/sessionTimeout.js"></script>
 </body>
 </html>
 

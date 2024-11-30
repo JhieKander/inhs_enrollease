@@ -47,13 +47,14 @@
                                 <p><?php echo $context; ?></p>
                             </div>
 
-                            <button class="proceed-button">Proceed to Filipino Assessment Questions</button>
+                            <button class="proceed-button" onclick="window.location.href='filipino_comprehend.php'">Proceed to Filipino Assessment Questions</button>
                         </div>
                     </div>
                 </div>
             </section>
         </div>
     </main>
+    <script src="JavaScript/sessionTimeout.js"></script>
 </body>
 </html>
 

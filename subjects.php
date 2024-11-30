@@ -114,6 +114,7 @@
             </section>
         </div>
     </main>
+    <script src="JavaScript/sessionTimeout.js"></script>
 </body>
 </html>
 

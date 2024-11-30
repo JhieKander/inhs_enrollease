@@ -43,7 +43,7 @@
 
                         <div class="tain">
                             <?php include 'PHP/english_question.php'; ?>
-                            <button class="proceed-button">Proceed to Filipino Assessment</button>
+                            <button class="proceed-button" disabled onclick="window.location.href='rda.php'">Proceed</button>
                         </div>
                     </div>
                 </div>
@@ -52,6 +52,7 @@
     </main>
 </body>
 <script src="JavaScript/eng_answer.js"></script>
+<script src="JavaScript/sessionTimeout.js"></script>
 </html>
 
 <?php
