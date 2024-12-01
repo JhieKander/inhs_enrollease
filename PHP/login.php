@@ -33,6 +33,7 @@
             // Verify the password
             if (password_verify($password, $hashed_password)) {
                 // Password is correct, set session variables
+                $_SESSION['loggedin'] = true;
                 $_SESSION['email'] = $email; // Store the user's email in session
                 $_SESSION['StudentID_Number'] = $studentID;
 

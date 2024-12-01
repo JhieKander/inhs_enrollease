@@ -21,7 +21,7 @@
                             <a href="#">Account</a>
                             <ul class="dropdown">
                                 <li><a href="login_student.php">Student</a></li>
-                                <li><a href="Admin/login_admin.php">Admin</a></li>
+                                <li><a href="Admin/admin_login.php">Admin</a></li>
                             </ul>
                         </li>
                     </ul>

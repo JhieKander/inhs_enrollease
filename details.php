@@ -1,6 +1,12 @@
 <?php
     include 'header.php';
+    
+    // At the top of each protected page
     session_start();
+    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+        header('Location: login_student.php'); // Redirect to login page
+        exit; // Stop further execution
+    }
 
     include 'Database/database_conn.php'; // Include your database connection file
 
@@ -132,6 +138,10 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="text" id="email" value="<?php echo htmlspecialchars($studentEmail); ?>" disabled>
+                        </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="emergency-contact-name">Emergency Contact Name<span style="color: red;">*</span></label>
@@ -142,11 +152,8 @@
                                 <input type="text" id="emergency-contact" name="emergency_contact_number" placeholder="09XXXXXXXXX" maxlength="11" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9]/g, '');" value="<?php echo htmlspecialchars($emergencyContactNumber); ?>" <?php echo $emergencyContactNumberDisabled ? 'disabled' : ''; ?>>
                             </div>
                         </div>
-                        <h2>Account</h2>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="text" id="email" value="<?php echo htmlspecialchars($studentEmail); ?>" disabled>
-                        </div>
+                        
+                        <h2>Change Password</h2>
                         <div class="form-group">
                             <label for="password">Password</label>
                             <div class="password-container">

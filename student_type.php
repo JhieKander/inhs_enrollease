@@ -3,6 +3,12 @@
     include 'header.php';
     include 'PHP/tle_subject.php';
 
+    // Check if the user is already logged in
+    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+        header('Location: login_student.php'); // Redirect to login page if not logged in
+        exit; // Stop further execution
+    }
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Assuming you get the values from the submitted form
         if (isset($_POST['enrolleeType'])) {

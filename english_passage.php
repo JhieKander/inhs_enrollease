@@ -1,6 +1,13 @@
 <?php
     include 'header.php';
     include 'PHP/englishmaterial.php';
+
+    // At the top of each protected page
+    session_start();
+    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+        header('Location: login_student.php'); // Redirect to login page
+        exit; // Stop further execution
+    }
 ?>
 
 <!DOCTYPE html>

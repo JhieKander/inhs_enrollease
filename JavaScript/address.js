@@ -1828,64 +1828,82 @@ const addressData = {
 
 // Populate Province dropdown
 function populateProvince() {
-    const provinceSelect = document.getElementById("province");
+    const provinceSelect = document.getElementById('province-current');
     for (const province in addressData) {
-        const option = document.createElement("option");
+        const option = document.createElement('option');
         option.value = province;
         option.textContent = province;
         provinceSelect.appendChild(option);
     }
+    console.log("Provinces populated:", provinceSelect.innerHTML);
 }
 
 // Update City dropdown based on selected Province
 function updateCity() {
-    const provinceSelect = document.getElementById("province");
+    const provinceSelect = document.getElementById("province-current");
     const selectedProvince = provinceSelect.value;
-    const citySelect = document.getElementById("city");
-    const barangaySelect = document.getElementById("barangay");
+    const citySelect = document.getElementById("city-current");
+    const barangaySelect = document.getElementById("barangay-current");
 
     // Clear previous options
     citySelect.innerHTML = '<option value="">Select City</option>';
     barangaySelect.innerHTML = '<option value="">Select Barangay</option>';
 
     if (selectedProvince) {
-        const cities = addressData[selectedProvince].cities;
-        for (const city in cities) {
-            const option = document.createElement("option");
-            option.value = city;
-            option.textContent = city;
-            citySelect.appendChild(option);
+        const cities = addressData[selectedProvince]?.cities; // Use optional chaining
+        console.log("Selected Province:", selectedProvince);
+        console.log("Cities:", cities);
+
+        if (cities) {
+            for (const city in cities) {
+                const option = document.createElement("option");
+                option.value = city;
+                option.textContent = city;
+                citySelect.appendChild(option);
+            }
+        } else {
+            console.error("No cities found for the selected province.");
         }
     }
+    console.log("Cities populated:", citySelect.innerHTML);
 }
 
 // Update Barangay dropdown based on selected City
 function updateBarangay() {
-    const citySelect = document.getElementById("city");
+    const citySelect = document.getElementById("city-current");
     const selectedCity = citySelect.value;
-    const provinceSelect = document.getElementById("province");
-    const barangaySelect = document.getElementById("barangay");
+    const provinceSelect = document.getElementById("province-current");
+    const barangaySelect = document.getElementById("barangay-current");
 
     // Clear previous options
     barangaySelect.innerHTML = '<option value="">Select Barangay</option>';
 
     if (selectedCity) {
         const selectedProvince = provinceSelect.value;
-        const barangays = addressData[selectedProvince].cities[selectedCity];
+        const barangays = addressData[selectedProvince]?.cities[selectedCity]; // Use optional chaining
+        console.log("Selected City:", selectedCity);
+        console.log("Barangays:", barangays);
 
-        barangays.forEach(barangay => {
-            const option = document.createElement("option");
-            option.value = barangay;
-            option.textContent = barangay;
-            barangaySelect.appendChild(option);
-        });
+        if (barangays) {
+            barangays.forEach(barangay => {
+                const option = document.createElement("option");
+                option.value = barangay;
+                option.textContent = barangay;
+                barangaySelect.appendChild(option);
+            });
+        } else {
+            console.error("No barangays found for the selected city.");
+        }
     }
+    console.log("Barangays populated:", barangaySelect.innerHTML);
 }
 
-// Call populate functions on page load
-window.onload = function() {
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
     populateProvince();
-};
+    document.getElementById("province-current").addEventListener("change", updateCity);
+    document.getElementById("city-current").addEventListener("change", updateBarangay);
+});
 
 function populateProvincesPermanent() {
     const provinceDropdown = document.getElementById('province-permanent');
@@ -1934,3 +1952,10 @@ function updateBarangaysPermanent() {
         }
     }
 }
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    populateProvincesPermanent();
+    document.getElementById("province-permanent").addEventListener("change", updateCitiesPermanent);
+    document.getElementById("city-permanent").addEventListener("change", updateBarangaysPermanent);
+});

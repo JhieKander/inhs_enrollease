@@ -1,6 +1,13 @@
 <?php
     include_once 'header.php';
-    include_once 'generate_pdf.php'; 
+    include_once 'generate_pdf.php';
+    
+    // At the top of each protected page
+    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+       header('Location: login_student.php'); // Redirect to login page
+       exit; // Stop further execution
+    }
+     
     include_once 'PHP/acadyear.php';
 
     // Check if the form was submitted to save the data temporarily
@@ -226,9 +233,7 @@
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="place-of-birth">Place of Birth <span class="opt">(Municipality/City)</span><span style="color: red;">*</span></label>
-                                        <select id="place-of-birth" name="place-of-birth" class="long-input" value="<?php echo htmlspecialchars($studentPlaceOfBirth); ?>">
-                                            <option value=""></option>
-                                        </select>
+                                        <input type="text" id="place-of-birth" name="place-of-birth" class="long-input" value="<?php echo htmlspecialchars($studentBirthPlace); ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="psa-birth-certificate">PSA Birth Certificate No. (BReN) <span class="opt">(optional)</span></label>
@@ -338,44 +343,46 @@
                                 <div class="add">Current Address</div>
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <label for="country">Country</label>
-                                        <input type="text" id="country" name="country" value="Philippines" disabled>
+                                        <label for="country-current">Country</label>
+                                        <input type="text" id="country-current" name="country-current" value="Philippines" disabled>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="province">Province<span style="color: red;">*</span></label>
-                                        <select id="province" name="province" onchange="updateCity()">
-                                            <option value="<?php echo htmlspecialchars($currentProvince); ?>"><?php echo htmlspecialchars($currentProvince); ?></option>
-                                            <!-- Options will be populated based on data -->
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="city">Municipality/City<span style="color: red;">*</span></label>
-                                        <select id="city" name="city" onchange="updateBarangay()">
-                                            <option value="<?php echo htmlspecialchars($currentCity); ?>"><?php echo htmlspecialchars($currentCity); ?></option>
-                                            <!-- Options will be populated based on Province selection -->
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="barangay">Barangay<span style="color: red;">*</span></label>
-                                        <select id="barangay" name="barangay">
-                                            <option value="<?php echo htmlspecialchars($currentBarangay); ?>"><?php echo htmlspecialchars($currentBarangay); ?></option>
-                                            <!-- Options will be populated by JavaScript -->
-                                        </select>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="province-current">Province<span style="color: red;">*</span></label>
+                                            <select id="province-current" name="province-current" onchange="updateCity()">
+                                                <option value="<?php echo htmlspecialchars($currentProvince); ?>"><?php echo htmlspecialchars($currentProvince); ?></option>
+                                                <!-- Options will be populated based on data -->
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="city-current">Municipality/City<span style="color: red;">*</span></label>
+                                            <select id="city-current" name="city-current" onchange="updateBarangay()">
+                                                <option value="<?php echo htmlspecialchars($currentCity); ?>"><?php echo htmlspecialchars($currentCity); ?></option>
+                                                <!-- Options will be populated based on Province selection -->
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="barangay-current">Barangay<span style="color: red;">*</span></label>
+                                            <select id="barangay-current" name="barangay-current">
+                                                <option value="<?php echo htmlspecialchars($currentBarangay); ?>"><?php echo htmlspecialchars($currentBarangay); ?></option>
+                                                <!-- Options will be populated by JavaScript -->
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <label for="house-number">House Number<span style="color: red;">*</span></label>
-                                        <input type="text" id="house-number" name="house-number" value="<?php echo htmlspecialchars($currentHouseNumber); ?>">
+                                        <label for="house-number-current">House Number<span style="color: red;">*</span></label>
+                                        <input type="text" id="house-number-current" name="house-number-current" value="<?php echo htmlspecialchars($currentHouseNumber); ?>">
                                     </div>
                                     <div class="form-group">
-                                        <label for="street-name">Street Name<span style="color: red;">*</span></label>
-                                        <input type="text" id="street-name" name="street-name" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($currentStreetName); ?>">
+                                        <label for="street-name-current">Street Name<span style="color: red;">*</span></label>
+                                        <input type="text" id="street-name-current" name="street-name-current" pattern="[A-Za-z ]+" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');" value="<?php echo htmlspecialchars($currentStreetName); ?>">
                                     </div>
                                     <div class="form-group">
-                                        <label for="zip-code">Zip Code<span style="color: red;">*</span></label>
-                                        <input type="text" id="zip-code" name="zip-code" pattern="^\d{4}$" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g, '')" value="<?php echo htmlspecialchars($currentZipCode); ?>">
+                                        <label for="zip-code-current">Zip Code<span style="color: red;">*</span></label>
+                                        <input type="text" id="zip-code-current" name="zip-code-current" pattern="^\d{4}$" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g, '')" value="<?php echo htmlspecialchars($currentZipCode); ?>">
                                     </div>
                                 </div>
 
@@ -604,30 +611,17 @@
             </div>
         </div>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- jQuery (required for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Include Select2 CSS -->
+       
+    <script src="JavaScript/radio_button.js"></script>
+    <script src="JavaScript/address.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
-    <!-- Include Select2 JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    
-    <script src="JavaScript/radio_button.js"></script>
-    <script src="JavaScript/birthplace.js"></script>
-    <script src="JavaScript/address.js"></script>
     <script src="JavaScript/button.js"></script>
     <script src="JavaScript/grade_level.js"></script>
     <script src="JavaScript/generatePDF.js"></script>
 
-<!-- Include Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Include Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="JavaScript/sessionTimeout.js"></script>
 

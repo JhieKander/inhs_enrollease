@@ -1,5 +1,13 @@
 <?php
     include 'header.php';
+
+    session_start(); // Start the session
+
+    // Check if the user is already logged in
+    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+        header('Location: login_student.php'); // Redirect to login page if not logged in
+        exit; // Stop further execution
+    }
 ?>
 
 <!DOCTYPE html>

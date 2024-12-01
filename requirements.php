@@ -1,6 +1,15 @@
 <?php
     include 'header.php';
     include 'PHP/vision_api.php';
+
+    require_once 'Database/database_conn.php';
+
+    // Check if the user is already logged in
+    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+        header('Location: login_student.php'); // Redirect to login page if not logged in
+        exit; // Stop further execution
+    }
+
     if (isset($_SESSION['verification_errors'])) {
         echo "<script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -8,6 +17,45 @@
             });
         </script>";
         unset($_SESSION['verification_errors']); // Clear the errors after displaying
+    }
+
+    $studentID = $_SESSION['StudentID_Number'];
+
+    // Fetch student profile details
+    $query = "SELECT * FROM student_profile WHERE StudentID_Number = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $studentID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $profile = $result->fetch_assoc();
+
+    // Columns to check for completeness
+    $requiredColumns = [
+        'Student_MotherTongue', 'Student_BirthPlace',
+        'Student_IPCommunity', 'Student_WithDisability', 'Student_4PsBeneficiary',
+        'Current_Country', 'Current_Province', 'Current_City', 'Current_Barangay',
+        'Current_StreetName', 'Current_HouseNumber', 'Current_ZipCode',
+        'Permanent_Country', 'Permanent_Province', 'Permanent_City',
+        'Permanent_Barangay', 'Permanent_StreetName', 'Permanent_HouseNo',
+        'Permanent_ZipCode', 'Father_FirstName', 'Father_LastName', 'Father_ContactNumber', 'Mother_FirstName',
+        'Mother_LastName', 'Mother_ContactNumber',
+        'Guardian_FirstName', 'Guardian_LastName',
+        'Guardian_ContactNumber'
+    ];
+
+    $isProfileComplete = true;
+
+    foreach ($requiredColumns as $column) {
+        if (empty($profile[$column])) {
+            $isProfileComplete = false;
+            break;
+        }
+    }
+
+    if (!$isProfileComplete) {
+        // Redirect to application form if profile is incomplete
+        header("Location: application.php");
+        exit;
     }
 ?>
 

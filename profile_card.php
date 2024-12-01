@@ -1,4 +1,7 @@
 <?php
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start(); // Start the session only if it hasn't been started yet
+    }
     include 'Database/database_conn.php'; // Include your database connection file
 
     $fullName = "Enrollee"; // Default to "Enrollee"
@@ -32,6 +35,24 @@
             }
         }
         $stmt->close();
+
+        // Fetch the ID_Picture from the database
+        $query = "SELECT ID_Picture FROM student_requirements WHERE StudentID_Number = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $studentIDNumber);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $profileImage = "images/blank-profile-picture-973460_1280.png"; // Default image
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            if (!empty($row['ID_Picture'])) {
+                $profileImage = "inhs/" . $row['ID_Picture']; // Use the uploaded image if available
+            }else{
+                $profileImage = "images/blank-profile-picture-973460_1280.png"; // Default image
+            }
+        }
+        $stmt->close();
     }
 ?>
 
@@ -39,7 +60,7 @@
 
 <div class="profile">
     <div class="profile-img">
-        <img src="images/blank-profile-picture-973460_1280.png" alt="Profile Picture">
+        <img src="<?php echo htmlspecialchars($profileImage); ?>" alt="Profile Picture">
     </div>
     <div class="profile-info">
         <p class="comewel">Welcome!</p>

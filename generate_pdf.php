@@ -26,28 +26,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $beneficiary = isset($_POST['beneficiary']) ? $_POST['beneficiary'] : '';
     $beneficiary_specify = $_POST['beneficiary-specify'];
 
-    foreach ($_POST as $key => $value) {
-        $_POST[$key] = strtoupper($value);
-    }
-
     // Capture form data from POST
     $school_year = $_POST['schoolYear'];
     $LRN = $_POST['learner-reference-number'];
-    $student_lastname = $_POST['last-name'];
-    $student_firstname = $_POST['first-name'];
-    $student_middlename = $_POST['middle-name'];
-    $student_extension_name = $_POST['extension-name'];
+    $student_lastname = strtoupper($_POST['last-name']);
+    $student_firstname = strtoupper($_POST['first-name']);
+    $student_middlename = strtoupper($_POST['middle-name']);
+    $student_extension_name = strtoupper($_POST['extension-name']);
     $birthdate = isset($_POST['birthdate']) ? $_POST['birthdate'] : '';
     $mother_tongue = $_POST['mother-tongue'];
     $place_of_birth = $_POST['place-of-birth'];
     $psa_birth_certificate = $_POST['psa-birth-certificate'];
-    $house_number = $_POST['house-number'];
-    $street_name = $_POST['street-name'];
-    $barangay = $_POST['barangay'];
-    $city = $_POST['city'];
-    $province = $_POST['province'];
-    $country = isset($_SESSION['country']) ? $_SESSION['country'] : "PHILIPPINES";
-    $zip_code = $_POST['zip-code'];
+    $house_number = $_POST['house-number-current'];
+    $street_name =$_POST['street-name-current'];
+    $barangay = $_POST['barangay-current'];
+    $city = $_POST['city-current'];
+    $province = $_POST['province-current'];
+    $country = isset($_SESSION['country-current']) ? $_SESSION['country-current'] : "PHILIPPINES";
+    $zip_code = $_POST['zip-code-current'];
     $same_address = isset($_POST['same-address']) ? true : false;
     $permanent_house_number = $_POST['house-number-permanent'];
     $permanent_street_name = $_POST['street-name-permanent'];
@@ -56,21 +52,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $permanent_province = $_POST['province-permanent'];
     $permanent_country = isset($_SESSION['country-permanent']) ? $_SESSION['country-permanent'] : "PHILIPPINES";
     $permanent_zip_code = $_POST['zip-code-permanent'];
-    $father_lastname = $_POST['father-last-name'];
-    $father_firstname = $_POST['father-first-name'];
-    $father_middlename = $_POST['father-middle-name'];
+    $father_lastname = strtoupper($_POST['father-last-name']);
+    $father_firstname = strtoupper($_POST['father-first-name']);
+    $father_middlename = strtoupper($_POST['father-middle-name']);
     $father_contact = $_POST['father-contact-number'];
-    $mother_lastname = $_POST['mother-last-name'];
-    $mother_firstname = $_POST['mother-first-name'];
-    $mother_middlename = $_POST['mother-middle-name'];
+    $mother_lastname = strtoupper($_POST['mother-last-name']);
+    $mother_firstname = strtoupper($_POST['mother-first-name']);
+    $mother_middlename = strtoupper($_POST['mother-middle-name']);
     $mother_contact = $_POST['mother-contact-number'];
-    $guardian_lastname = $_POST['guardian-last-name'];
-    $guardian_firstname = $_POST['guardian-first-name'];
-    $guardian_middlename = $_POST['guardian-middle-name'];
+    $guardian_lastname = strtoupper($_POST['guardian-last-name']);
+    $guardian_firstname = strtoupper($_POST['guardian-first-name']);
+    $guardian_middlename = strtoupper($_POST['guardian-middle-name']);
     $guardian_contact = $_POST['guardian-contact-number'];
-    $last_grade = $_POST['last-grade'];
+    $last_grade = strtoupper($_POST['last-grade']);
     $last_school_year = $_POST['last-school-year'];
-    $last_school = $_POST['last-school'];
+    $last_school = strtoupper($_POST['last-school']);
     $school_id = $_POST['school-id'];
     $student_type = $_POST['studentType'];
     $studentID = isset($_POST['studentID']) ? $_POST['studentID'] : 'Not specified';
@@ -253,12 +249,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $pdf->SetFontSpacing(0);
     // Current address
-    $pdf->SetXY(25, 166); $pdf->Cell(100, 10, $house_number, 0, 1);
-    $pdf->SetXY(61, 166); $pdf->Cell(100, 10, $street_name, 0, 1);
-    $pdf->SetXY(123.5, 166); $pdf->Cell(100, 10, $barangay, 0, 1);
-    $pdf->SetXY(25, 177); $pdf->Cell(100, 10, $city, 0, 1);
-    $pdf->SetXY(72, 177); $pdf->Cell(100, 10, $province, 0, 1);
-    $pdf->SetXY(123.5, 177); $pdf->Cell(100, 10, $country, 0, 1);
+    $pdf->SetXY(25, 166); $pdf->Cell(100, 10, strtoupper($house_number), 0, 1);
+    $pdf->SetXY(61, 166); $pdf->Cell(100, 10, strtoupper($street_name), 0, 1);
+    $pdf->SetXY(123.5, 166); $pdf->Cell(100, 10, strtoupper($barangay), 0, 1);
+    $pdf->SetXY(25, 177); $pdf->Cell(100, 10, strtoupper($city), 0, 1);
+    $pdf->SetXY(72, 177); $pdf->Cell(100, 10, strtoupper($province), 0, 1);
+    $pdf->SetXY(123.5, 177); $pdf->Cell(100, 10, strtoupper($country), 0, 1);
     $pdf->SetXY(80, 177); $pdf->Cell(100, 10, $zip_code, 0, 1, 'R');
 
     // Permanent address section
@@ -273,23 +269,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $permanent_province = $province;
         $permanent_zip_code = $zip_code;
 
-        $pdf->SetXY(25, 196); $pdf->Cell(100, 10, $house_number, 0, 1);
-        $pdf->SetXY(61, 196); $pdf->Cell(100, 10, $street_name, 0, 1);
-        $pdf->SetXY(123.5, 196); $pdf->Cell(100, 10, $barangay, 0, 1);
-        $pdf->SetXY(25, 207); $pdf->Cell(100, 10, $city, 0, 1);
-        $pdf->SetXY(72, 207); $pdf->Cell(100, 10, $province, 0, 1);
-        $pdf->SetXY(123.5, 207); $pdf->Cell(100, 10, $country, 0, 1);
+        $pdf->SetXY(25, 196); $pdf->Cell(100, 10, strtoupper($house_number), 0, 1);
+        $pdf->SetXY(61, 196); $pdf->Cell(100, 10, strtoupper($street_name), 0, 1);
+        $pdf->SetXY(123.5, 196); $pdf->Cell(100, 10, strtoupper($barangay), 0, 1);
+        $pdf->SetXY(25, 207); $pdf->Cell(100, 10, strtoupper($city), 0, 1);
+        $pdf->SetXY(72, 207); $pdf->Cell(100, 10, strtoupper($province), 0, 1);
+        $pdf->SetXY(123.5, 207); $pdf->Cell(100, 10, strtoupper($country), 0, 1);
         $pdf->SetXY(80, 207); $pdf->Cell(100, 10, $zip_code, 0, 1, 'R');
     } else { 
         $pdf->SetXY(94.5, 189); // Adjust the position to the LRN "No" checkbox
         $pdf->Cell(5, 5, 'X', 0, 1);
 
-        $pdf->SetXY(25, 196); $pdf->Cell(100 , 10, $permanent_house_number, 0, 1);
-        $pdf->SetXY(60, 196); $pdf->Cell(100, 10, $permanent_street_name, 0, 1);
-        $pdf->SetXY(123.5, 196); $pdf->Cell(100, 10, $permanent_barangay, 0, 1);
-        $pdf->SetXY(25, 207); $pdf->Cell(100, 10, $permanent_city, 0, 1);
-        $pdf->SetXY(72, 207); $pdf->Cell(100, 10, $permanent_province, 0, 1);
-        $pdf->SetXY(123.5, 207); $pdf->Cell(100, 10, $permanent_country, 0, 1);
+        $pdf->SetXY(25, 196); $pdf->Cell(100 , 10, strtoupper($permanent_house_number), 0, 1);
+        $pdf->SetXY(60, 196); $pdf->Cell(100, 10, strtoupper($permanent_street_name), 0, 1);
+        $pdf->SetXY(123.5, 196); $pdf->Cell(100, 10, strtoupper($permanent_barangay), 0, 1);
+        $pdf->SetXY(25, 207); $pdf->Cell(100, 10, strtoupper($permanent_city), 0, 1);
+        $pdf->SetXY(72, 207); $pdf->Cell(100, 10, strtoupper($permanent_province), 0, 1);
+        $pdf->SetXY(123.5, 207); $pdf->Cell(100, 10, strtoupper($permanent_country), 0, 1);
         $pdf->SetXY(80, 207); $pdf->Cell(100, 10, $permanent_zip_code, 0, 1, 'R');
     }
 
